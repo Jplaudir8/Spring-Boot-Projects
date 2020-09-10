@@ -1,4 +1,4 @@
-# Projects contained in this repository
+# Projects
 ## Cloud Storage Service Company
 This project consists of a cloud service which will enable the user:
 - Simple File Storage: Upload/download/remove files
