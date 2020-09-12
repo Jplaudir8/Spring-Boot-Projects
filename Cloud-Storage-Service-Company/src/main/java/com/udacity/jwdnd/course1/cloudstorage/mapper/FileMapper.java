@@ -24,7 +24,7 @@ public interface FileMapper {
     @Update("UPDATE FILES SET filename = #{newFileName} where notetitle = #{currentFileName}")
     void updateFile(String newFileName, String currentFileName);
 
-
+    
     @Delete("DELETE FROM FILES WHERE filename = #{fileName}")
     void deleteFileByFilename(String fileName);
 
