@@ -28,10 +28,24 @@ public class SignupController {
 
     @PostMapping
     public String signupUser(@ModelAttribute User user, Model model){
-        String signupError = null; // this variable is read by signup.html
+        String signupErrorMsg = null; // this variable is read by signup.html
 
-        // Implementing signup security...
+        if (!userService.isUsernameAvailable(user.getUsername()))
+            signupErrorMsg = "The username already exists!";
 
+        if (signupErrorMsg == null) {
+            int rowsAdded = userService.createUser(user);
+            if (rowsAdded < 0) {
+                signupErrorMsg = "There was an error signing you up. Please try again.";
+            }
+        }
+
+        if (signupErrorMsg == null) {
+            model.addAttribute("signupSuccess", true);
+        } else {
+            model.addAttribute("signupErrorMsg", signupErrorMsg);
+        }
+        
         return "signup";
     }
 }
