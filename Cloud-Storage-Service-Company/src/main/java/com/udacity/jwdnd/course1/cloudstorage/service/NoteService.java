@@ -23,8 +23,6 @@ public class NoteService {
         Note newNote = new Note();
         newNote.setNoteTitle(noteModalForm.getNoteTitle());
         newNote.setNoteDescription(noteModalForm.getNoteDescription());
-        //our 'Notes' table needs the UserId which is a foreign key
-        // 1 way could be:
         newNote.setUserId(userMapper.getUserIdByUsername(username));
         noteMapper.insertNote(newNote);
     }

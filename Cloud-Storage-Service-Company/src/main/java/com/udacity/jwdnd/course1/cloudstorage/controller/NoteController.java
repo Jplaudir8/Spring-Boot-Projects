@@ -19,11 +19,11 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping
+    /*@GetMapping
     public String getHomePage(NoteModalForm noteModalForm, Model model) {
         model.addAttribute("notes", this.noteService.getAllNotes());
         return "home";
-    }
+    }*/
 
     @PostMapping
     public String postNewNote(Authentication authentication, NoteModalForm noteModalForm, Model model) {
