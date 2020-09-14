@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,17 +49,34 @@ public class NoteController {
         } else {
             try {
                 this.noteService.createNote(noteModalForm, username);
-                redirectAttributes.addFlashAttribute("successMessage", "Your note was created successful.");
+                redirectAttributes.addFlashAttribute("successMessage", "Your note was successfully created.");
                 noteModalForm.setNoteTitle("");
                 noteModalForm.setNoteDescription("");
                 return "redirect:/result";
             } catch (Exception e) {
                 logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
-                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note update. Please try again!");
+                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note update... Please try again.");
                 return "redirect:/result";
             }
         }
 
+    }
+
+    /**
+     * Delete note
+     * @param noteId - Note to be deleted with the given id
+     */
+    @GetMapping("/delete/{noteId}")
+    public String deleteNote(@PathVariable int noteId, RedirectAttributes redirectAttributes) {
+        try {
+            noteService.deleteNote(noteId);
+            redirectAttributes.addFlashAttribute("successMessage", "Your note was successfully deleted");
+            return "redirect:/result";
+        } catch (Exception e) {
+            logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note deletion... Please try again.");
+            return "redirect:/result";
+        }
     }
 
 }

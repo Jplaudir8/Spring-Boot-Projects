@@ -39,6 +39,10 @@ public class NoteService {
         noteMapper.updateNote(selectedNote);
     }
 
+    public void deleteNote(int noteId) {
+        noteMapper.deleteNoteById(noteId);
+    }
+
     public List<Note> getAllUserNotes(int userId) {
         return noteMapper.getAllUserNotes(userId);
     }

@@ -21,7 +21,7 @@ public interface NoteMapper {
     void updateNote(Note note);
 
 
-    @Delete("DELETE FROM NOTES WHERE notetitle = #{noteTitle}")
-    void deleteNoteByTitle(String noteTitle);
+    @Delete("DELETE FROM NOTES WHERE noteid = #{noteId}")
+    void deleteNoteById(int notId);
 
 }
