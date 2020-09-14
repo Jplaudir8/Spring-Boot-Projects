@@ -1,39 +1,63 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteModalForm;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.service.NoteService;
+import com.udacity.jwdnd.course1.cloudstorage.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/note")
 public class NoteController {
 
-    NoteService noteService;
+    private Logger logger = LoggerFactory.getLogger(NoteController.class);
 
-    public NoteController(NoteService noteService) {
+    private NoteService noteService;
+
+    public NoteController(NoteService noteService, UserService userService) {
         this.noteService = noteService;
     }
 
-    /*@GetMapping
-    public String getHomePage(NoteModalForm noteModalForm, Model model) {
-        model.addAttribute("notes", this.noteService.getAllNotes());
-        return "home";
-    }*/
-
+    /**
+     * Create or Update a new note
+     * @param noteModalForm - Note to create or update
+     * @param authentication - Authenticated user
+     */
     @PostMapping
-    public String postNewNote(Authentication authentication, NoteModalForm noteModalForm, Model model) {
-        System.out.println("Captured: " + noteModalForm.getNoteTitle() + noteModalForm.getNoteDescription());
+    public String createOrUpdateNote(NoteModalForm noteModalForm, Authentication authentication, RedirectAttributes redirectAttributes) {
         String username = authentication.getName();
-        this.noteService.addNote(noteModalForm, username);
-        noteModalForm.setNoteTitle("");
-        noteModalForm.setNoteDescription("");
-        model.addAttribute("notes", this.noteService.getAllNotes());
-        return "home";
+
+        if (!noteModalForm.getNoteId().equalsIgnoreCase("")) {
+            try {
+                this.noteService.updateNote(noteModalForm, username);
+                redirectAttributes.addFlashAttribute("successMessage", "Your note was updated successful.");
+                return "redirect:/result";
+            } catch (Exception e) {
+                logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
+                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note update. Please try again!");
+                return "redirect:/result";
+            }
+        } else {
+            try {
+                this.noteService.createNote(noteModalForm, username);
+                redirectAttributes.addFlashAttribute("successMessage", "Your note was created successful.");
+                noteModalForm.setNoteTitle("");
+                noteModalForm.setNoteDescription("");
+                return "redirect:/result";
+            } catch (Exception e) {
+                logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
+                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note update. Please try again!");
+                return "redirect:/result";
+            }
+        }
+
     }
 
 }

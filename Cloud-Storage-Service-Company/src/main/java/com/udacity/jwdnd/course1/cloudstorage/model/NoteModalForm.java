@@ -2,8 +2,17 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class NoteModalForm {
 
+    private String noteId;
     private String noteTitle;
     private String noteDescription;
+
+    public String getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(String noteId) {
+        this.noteId = noteId;
+    }
 
     public String getNoteTitle() {
         return noteTitle;

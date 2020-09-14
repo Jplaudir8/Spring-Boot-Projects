@@ -13,13 +13,16 @@ public class NoteService {
 
     private NoteMapper noteMapper;
     private UserMapper userMapper;
+    private UserService userService;
 
-    public NoteService(NoteMapper noteMapper, UserMapper userMapper) {
+    public NoteService(NoteMapper noteMapper, UserMapper userMapper, UserService userService) {
         this.noteMapper = noteMapper;
         this.userMapper = userMapper;
+        this.userService = userService;
     }
 
-    public void addNote(NoteModalForm noteModalForm, String username) {
+    public void createNote(NoteModalForm noteModalForm, String username) {
+        int userId = userService.getUser(username).getUserId();
         Note newNote = new Note();
         newNote.setNoteTitle(noteModalForm.getNoteTitle());
         newNote.setNoteDescription(noteModalForm.getNoteDescription());
@@ -27,8 +30,17 @@ public class NoteService {
         noteMapper.insertNote(newNote);
     }
 
-    public List<Note> getAllNotes() {
-        return noteMapper.getAllNotes();
+    public void updateNote(NoteModalForm noteModalForm, String username) {
+        Note selectedNote = new Note();
+        selectedNote.setNoteId(Integer.parseInt(noteModalForm.getNoteId()));
+        selectedNote.setNoteTitle(noteModalForm.getNoteTitle());
+        selectedNote.setNoteDescription(noteModalForm.getNoteDescription());
+        selectedNote.setUserId(userMapper.getUserIdByUsername(username));
+        noteMapper.updateNote(selectedNote);
+    }
+
+    public List<Note> getAllUserNotes(int userId) {
+        return noteMapper.getAllUserNotes(userId);
     }
 
 }
