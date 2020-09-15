@@ -13,16 +13,13 @@ public class NoteService {
 
     private NoteMapper noteMapper;
     private UserMapper userMapper;
-    private UserService userService;
 
     public NoteService(NoteMapper noteMapper, UserMapper userMapper, UserService userService) {
         this.noteMapper = noteMapper;
         this.userMapper = userMapper;
-        this.userService = userService;
     }
 
     public void createNote(NoteModalForm noteModalForm, String username) {
-        int userId = userService.getUser(username).getUserId();
         Note newNote = new Note();
         newNote.setNoteTitle(noteModalForm.getNoteTitle());
         newNote.setNoteDescription(noteModalForm.getNoteDescription());
