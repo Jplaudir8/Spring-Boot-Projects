@@ -31,7 +31,7 @@ public class CredentialController {
 
         if (!credentialModalForm.getCredentialId().equalsIgnoreCase("")) {
             try {
-                credentialService.updateCredential(credentialModalForm, username);
+                this.credentialService.updateCredential(credentialModalForm, username);
                 redirectAttributes.addFlashAttribute("successMessage", "Your credentials were updated successfully.");
                 return "redirect:/result";
             } catch (Exception e) {
@@ -41,7 +41,7 @@ public class CredentialController {
             }
         } else {
             try {
-                credentialService.createCredential(credentialModalForm, username);
+                this.credentialService.createCredential(credentialModalForm, username);
                 redirectAttributes.addFlashAttribute("successMessage", "Your credentials were successfully created.");
                 credentialModalForm.setUrl("");
                 credentialModalForm.setUsername("");
