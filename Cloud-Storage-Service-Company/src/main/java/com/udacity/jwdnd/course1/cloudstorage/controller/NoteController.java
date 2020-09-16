@@ -39,7 +39,7 @@ public class NoteController {
         if (!noteModalForm.getNoteId().equalsIgnoreCase("")) {
             try {
                 this.noteService.updateNote(noteModalForm, username);
-                redirectAttributes.addFlashAttribute("successMessage", "Your note was updated successful.");
+                redirectAttributes.addFlashAttribute("successMessage", "Your note was updated successfully.");
                 return "redirect:/result";
             } catch (Exception e) {
                 logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
@@ -55,7 +55,7 @@ public class NoteController {
                 return "redirect:/result";
             } catch (Exception e) {
                 logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
-                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note update... Please try again.");
+                redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the note creation... Please try again.");
                 return "redirect:/result";
             }
         }
