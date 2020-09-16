@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
@@ -45,5 +46,17 @@ public class EncryptionService {
         }
 
         return new String(decryptedValue);
+    }
+
+    public String generateKey() {
+        try {
+            KeyGenerator generator = KeyGenerator.getInstance("AES");
+            generator.init(256, new SecureRandom());
+            System.out.println(generator.generateKey().toString());
+            return generator.generateKey().toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
