@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,7 +57,22 @@ public class CredentialController {
         }
     }
 
-
+    /**
+     * Delete note
+     * @param credentialId - Note to be deleted with the given id
+     */
+    @GetMapping("/delete/{credentialId}")
+    public String deleteCredential(@PathVariable int credentialId, RedirectAttributes redirectAttributes) {
+        try {
+            credentialService.deleteCredential(credentialId);
+            redirectAttributes.addFlashAttribute("successMessage", "Your credentials were successfully deleted");
+            return "redirect:/result";
+        } catch (Exception e) {
+            logger.error("Cause: " + e.getCause() + ". Message: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong with the credentials deletion... Please try again.");
+            return "redirect:/result";
+        }
+    }
 
 
 

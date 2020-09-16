@@ -60,8 +60,8 @@ public class CredentialService {
         credentialMapper.updateCredential(selectedCredential);
     }
 
-    public void deleteCredential(int noteId) {
-        credentialMapper.deleteCredentialById(noteId);
+    public void deleteCredential(int credentialId) {
+        credentialMapper.deleteCredentialById(credentialId);
     }
 
 }
