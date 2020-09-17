@@ -3,7 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.service;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
-import com.udacity.jwdnd.course1.cloudstorage.model.CredentialModalForm;
+import com.udacity.jwdnd.course1.cloudstorage.model.modalForms.CredentialModalForm;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

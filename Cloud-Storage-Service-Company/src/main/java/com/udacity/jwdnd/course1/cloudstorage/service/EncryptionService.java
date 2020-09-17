@@ -49,19 +49,6 @@ public class EncryptionService {
         return new String(decryptedValue);
     }
 
-    /*public String generateKey() {
-        try {
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
-            generator.init(256, new SecureRandom());
-            System.out.println(generator.generateKey().toString());
-            return generator.generateKey().toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            System.out.print("error in method: generateKey()");
-        }
-        return null;
-    }*/
-
     public String generateKey() {
         try {
             KeyGenerator gen = KeyGenerator.getInstance("AES");

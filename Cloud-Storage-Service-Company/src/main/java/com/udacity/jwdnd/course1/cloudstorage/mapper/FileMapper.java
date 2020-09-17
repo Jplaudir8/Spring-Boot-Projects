@@ -9,24 +9,17 @@ import java.util.List;
 @Mapper
 public interface FileMapper {
 
-    @Select("SELECT * FROM FILES")
-    List<File> getAllFiles();
+    @Select("SELECT * FROM FILES WHERE userid = #{userId}")
+    List<File> getAllUserFiles(int userId);
 
     @Select("SELECT * FROM FILES where filename = #{fileName}")
     File getFilebyFilename(String fileName);
-
 
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys=true, keyProperty="fileId")
     int insertFile(File file);
 
-
-    @Update("UPDATE FILES SET filename = #{newFileName} where notetitle = #{currentFileName}")
-    void updateFile(String newFileName, String currentFileName);
-
-
-    @Delete("DELETE FROM FILES WHERE filename = #{fileName}")
-    void deleteFileByFilename(String fileName);
-
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
+    void deleteFileByFilename(int fileId);
 
 }
