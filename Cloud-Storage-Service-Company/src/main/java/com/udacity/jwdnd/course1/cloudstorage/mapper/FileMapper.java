@@ -12,8 +12,11 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE userid = #{userId}")
     List<File> getAllUserFiles(int userId);
 
-    @Select("SELECT * FROM FILES where filename = #{fileName}")
+    @Select("SELECT * FROM FILES WHERE filename = #{fileName}")
     File getFilebyFilename(String fileName);
+
+    @Select("SELECT * FROM FILES WHERE fileid = #{fileId}")
+    File getFileByFileid(int fileId);
 
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys=true, keyProperty="fileId")
