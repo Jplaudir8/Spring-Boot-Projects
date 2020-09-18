@@ -53,6 +53,44 @@ class CloudStorageApplicationTests {
 
 		driver.get(baseURL + "/signup");
 		Assertions.assertEquals("Sign Up", driver.getTitle());
+
+	}
+
+	@Test
+	public void testSignupLoginAndLogoutNewUser() {
+
+		// User data to be used:
+		String firstName = "Albert";
+		String lastName = "Einstein";
+		String username = "alb123";
+		String password = "ein123";
+
+		// Verify '/signup' endpoint takes us to Sign Up page.
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+
+		// Initializing Selenium Object Page and signing up the new user.
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup(firstName, lastName, username, password); // Automatically redirects to the Login Page after signing up.
+
+		// Verify we were successfully redirected to Login page.
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		// Initializing Selenium Object Page and logging new user in.
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password); // Automatically redirects to home page.
+
+		// Verify we were successfully redirected to Home page.
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// Log out user and verify it was successfully redirected to login page.
+		HomePage homePage = new HomePage(driver);
+		homePage.logout();
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		// Verify Home page is no longer accessible after logging out.
+		driver.get(baseURL + "/home");
+		Assertions.assertFalse(driver.getTitle().equals("Home"));
 		
 	}
 
