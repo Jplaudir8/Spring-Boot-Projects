@@ -6,7 +6,6 @@ import com.udacity.jwdnd.course1.cloudstorage.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +36,7 @@ public class FileController {
         String username = authentication.getName();
 
         if (fileMapper.getFilebyFilename(fileUpload.getOriginalFilename()) != null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cannot upload two files with same name");
+            redirectAttributes.addFlashAttribute("errorMessage", "Cannot upload two files with the same name");
         } else {
             try {
                 fileService.createFile(fileUpload, username);
