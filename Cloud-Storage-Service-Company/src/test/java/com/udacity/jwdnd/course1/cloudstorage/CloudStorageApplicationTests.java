@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -13,16 +14,19 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
-	private WebDriver driver;
+	private static WebDriver driver;
+
+	public String baseURL;
 
 	@BeforeAll
 	static void beforeAll() {
-		WebDriverManager.chromedriver().setup();
+		WebDriverManager.firefoxdriver().setup();
 	}
 
 	@BeforeEach
 	public void beforeEach() {
-		this.driver = new ChromeDriver();
+		this.driver = new FirefoxDriver();
+		baseURL = "http://localhost:" + port;
 	}
 
 	@AfterEach
@@ -32,10 +36,24 @@ class CloudStorageApplicationTests {
 		}
 	}
 
-	@Test
+	/*@Test
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
+	}*/
+
+	@Test
+	public void testHomePageNotAccessibleByUnauthorizedUser() {
+
+		driver.get(baseURL + "/home");
+		Assertions.assertFalse(driver.getTitle().equals("Home"));
+
+		driver.get(baseURL + "/login");
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+		
 	}
 
 }
