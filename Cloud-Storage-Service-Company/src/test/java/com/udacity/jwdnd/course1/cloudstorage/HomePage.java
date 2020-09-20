@@ -1,12 +1,18 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
+
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     @FindBy(css="#logout-submit-button")
     private WebElement logoutSubmitButton;
@@ -37,7 +43,6 @@ public class HomePage {
         this.logoutSubmitButton.click();
     }
 
-
     // NOTES TAB
 
     public void clickNotesButton() throws InterruptedException {
@@ -56,13 +61,19 @@ public class HomePage {
         Thread.sleep(4000);
     }
 
+    private String getValueFromInput(String inputId) {
+        WebElement input = driver.findElement(By.id(inputId));
+        wait.until(ExpectedConditions.elementToBeClickable(input)).click();
+        return input.getText();
+    }
+
     public Note getFirstNote() throws InterruptedException {
         // Open Edit View
         noteEditButton.click();
         Thread.sleep(4000);
         // Retrieve data and insert it in firstNote object
-        String firstNoteTitle = noteTitleInput.getText();
-        String firstNoteDescription = noteDescriptionInput.getText();
+        String firstNoteTitle = getValueFromInput("note-title");
+        String firstNoteDescription = getValueFromInput("note-description");
         //System.out.print("Title: " + noteTitleInput.getText() + " and Description: " + noteDescriptionInput.getText());
         Note firstNote = new Note(null, firstNoteTitle, firstNoteDescription,null);
         return firstNote;
