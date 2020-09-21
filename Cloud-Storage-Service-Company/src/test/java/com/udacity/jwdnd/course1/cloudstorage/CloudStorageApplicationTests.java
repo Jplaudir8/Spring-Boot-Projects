@@ -3,9 +3,8 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,6 +19,7 @@ class CloudStorageApplicationTests {
 
 	private static WebDriver driver;
 	private WebDriverWait wait;
+	private JavascriptExecutor js;
 
 	public String baseURL;
 
@@ -32,6 +32,8 @@ class CloudStorageApplicationTests {
 	public void beforeEach() {
 		this.driver = new FirefoxDriver();
 		baseURL = "http://localhost:" + port;
+		js = (JavascriptExecutor) driver;
+		wait = new WebDriverWait(driver, 5);
 	}
 
 	@AfterEach
@@ -41,6 +43,10 @@ class CloudStorageApplicationTests {
 		}
 	}
 
+	/**
+	 * Test that verifies that the home page is not accessible
+	 * without logging in.
+	 */
 	@Test
 	public void testHomePageNotAccessibleByUnauthorizedUser() {
 
@@ -55,10 +61,15 @@ class CloudStorageApplicationTests {
 
 	}
 
+	/**
+	 * Test that signs up a new user, logs that user in, verifies that they
+	 * can access the home page, then logs out and verifies that the home
+	 * page is no longer accessible.
+	 */
 	@Test
-	public void testSignupLoginLogoutNewUser() throws InterruptedException {
+	public void testSignupLoginLogoutNewUser() {
 
-		// User data to be used:
+		// New User data to be used:
 		String firstName = "Albert";
 		String lastName = "Einstein";
 		String username = "alb123";
@@ -84,7 +95,7 @@ class CloudStorageApplicationTests {
 
 		// Log out user and verify it was successfully redirected to login page.
 		HomePage homePage = new HomePage(driver);
-		homePage.logout();
+		homePage.clickLogoutButton();
 		Assertions.assertEquals("Login", driver.getTitle());
 
 		// Verify Home page is no longer accessible after logging out.
@@ -93,8 +104,13 @@ class CloudStorageApplicationTests {
 
 	}
 
+	/**
+	 * Test that logs in an existing user, creates a note and verifies
+	 * that the note details are visible in the note list.
+	 * @throws InterruptedException
+	 */
 	@Test
-	public void testCreateNoteWithExistingUser() throws InterruptedException {
+	public void testCreateNoteWithExistingUser() {
 
 		// CREATING USER
 		// User data to be used:
@@ -107,14 +123,14 @@ class CloudStorageApplicationTests {
 		driver.get(baseURL + "/signup");
 		Assertions.assertEquals("Sign Up", driver.getTitle());
 
-		// Initializing Selenium Object Page and signing up the new user.
+		// Initializing Selenium Page Object and signing up the new user.
 		SignupPage signupPage = new SignupPage(driver);
 		signupPage.signup(firstName, lastName, username, password); // Automatically redirects to the Login Page after signing up.
 
 		// Verify we were successfully redirected to Login page.
 		Assertions.assertEquals("Login", driver.getTitle());
 
-		// Initializing Selenium Object Page and logging new user in.
+		// Initializing Selenium Page Object and logging new user in.
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(username, password); // Automatically redirects to home page.
 
@@ -125,17 +141,22 @@ class CloudStorageApplicationTests {
 		// Go to Notes Section and Create note
 		String noteTitle = "Places to visit";
 		String noteDescription = "Lima, Cuzco, Ica.";
+
 		HomePage homePage = new HomePage(driver);
+		homePage.clickNotesTabButton();
 		homePage.createNote(noteTitle, noteDescription); // Automatically redirects to result page.
 
 		// Verify we were successfully redirected to Result Page and go back to home page
+		wait.until(ExpectedConditions.titleContains("Result"));
 		Assertions.assertEquals("Result", driver.getTitle());
 		ResultPage resultPage = new ResultPage(driver);
 		resultPage.resultMsgAnchorClick(); // back to homepage;
-		homePage.clickNotesButton();
-		Thread.sleep(3000);
+		wait.until(ExpectedConditions.titleContains("Home"));
+		homePage.clickNotesTabButton();
 
 		// VERIFY CREATED NOTE
+		homePage.clickNotesEditButton();
+		homePage.waitNoteModelPage();
 		Note firstNote = homePage.getFirstNote();
 
 		Assertions.assertEquals(noteTitle, firstNote.getNoteTitle());
@@ -149,10 +170,9 @@ class CloudStorageApplicationTests {
 	 * appear in the note list.
 	 */
 	@Test
-	public void testChangeNoteData() throws InterruptedException {
+	public void testChangeNoteData() {
 
-		String newNoteTitle = "To-Do List";
-		String newNoteDescription = "Walk the dog, Wash the Car";
+		// Data to be used
 		String firstName = "qwe";
 		String lastName = "qwe";
 		String username = "qwe";
@@ -161,33 +181,54 @@ class CloudStorageApplicationTests {
 		// Signing up User, Creating a Note and logging out.
 		driver.get(baseURL + "/signup");
 		Assertions.assertEquals("Sign Up", driver.getTitle());
-
 		SignupPage signupPage = new SignupPage(driver);
 		signupPage.signup(firstName, lastName, username, password);
-
-		//driver.get(baseURL + "/login");
+		wait.until(ExpectedConditions.titleContains("Login"));
 		Assertions.assertEquals("Login", driver.getTitle());
-
 		// Initializing Selenium Object Page and logging new user in.
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
 		Assertions.assertEquals("Home", driver.getTitle());
+
+		// Creating Note
 		HomePage homePage = new HomePage(driver);
-		homePage.clickNotesButton();
+		homePage.clickNotesTabButton();
 		homePage.createNote("Any Title", "Any Description"); //Redirects to result page
+		wait.until(ExpectedConditions.titleContains("Result"));
 		Assertions.assertEquals("Result", driver.getTitle());
 		ResultPage resultPage = new ResultPage(driver);
 		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickLogoutButton();
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
 
-		Thread.sleep(1000);
-		homePage.logout();
+		// LOGGING IN EXISTING USER AND EDITING NOTE.
+		String newNoteTitle = "To-Do List";
+		String newNoteDescription = "Walk the dog, Wash the Car";
+		loginPage.login("qwe", "qwe");
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
 
-		// Logging in existing user and edit note
-		/*Note firstNote = homePage.getFirstNote();
-		firstNote.setNoteTitle(newNoteTitle);
-		firstNote.setNoteDescription(newNoteDescription);
-		homePage.updateNote(firstNote);*/
+		homePage.clickNotesTabButton();
+		homePage.clickNotesEditButton();
+		homePage.waitNoteModelPage();
+		Note firstNote = homePage.getFirstNote();
+		homePage.updateNote(firstNote, newNoteTitle, newNoteDescription); //Redirects to result page
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
 
 
+		// VERIFY EDITED NOTE
+		homePage.clickNotesTabButton();
+		homePage.clickNotesEditButton();
+		homePage.waitNoteModelPage();
+		Note newNote = homePage.getFirstNote();
+
+		Assertions.assertEquals(newNoteTitle, newNote.getNoteTitle());
+		Assertions.assertEquals(newNoteDescription, newNote.getNoteDescription());
 	}
 }
