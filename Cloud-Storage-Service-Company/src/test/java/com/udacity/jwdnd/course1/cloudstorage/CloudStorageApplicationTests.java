@@ -221,13 +221,11 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Result", driver.getTitle());
 		resultPage.resultMsgAnchorClick(); // Redirects to home page
 
-
 		// VERIFY EDITED NOTE
 		homePage.clickNotesTabButton();
 		homePage.clickNotesEditButton();
 		homePage.waitNoteModelPage();
 		Note newNote = homePage.getFirstNote();
-
 		Assertions.assertEquals(newNoteTitle, newNote.getNoteTitle());
 		Assertions.assertEquals(newNoteDescription, newNote.getNoteDescription());
 	}
