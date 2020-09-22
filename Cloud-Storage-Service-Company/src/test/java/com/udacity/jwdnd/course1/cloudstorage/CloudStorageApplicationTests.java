@@ -3,7 +3,6 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +18,6 @@ class CloudStorageApplicationTests {
 
 	private static WebDriver driver;
 	private WebDriverWait wait;
-	private JavascriptExecutor js;
 
 	public String baseURL;
 
@@ -32,7 +30,6 @@ class CloudStorageApplicationTests {
 	public void beforeEach() {
 		this.driver = new FirefoxDriver();
 		baseURL = "http://localhost:" + port;
-		js = (JavascriptExecutor) driver;
 		wait = new WebDriverWait(driver, 5);
 	}
 
@@ -229,4 +226,63 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(newNoteTitle, newNote.getNoteTitle());
 		Assertions.assertEquals(newNoteDescription, newNote.getNoteDescription());
 	}
+
+	/**
+	 * Test that logs in an existing user with existing notes, clicks the delete
+	 * note button on an existing note, and verifies that the note no longer
+	 * appears in the note list.
+	 */
+	@Test
+	public void testDeleteNote() {
+		// Data to be used
+		String firstName = "asd";
+		String lastName = "asd";
+		String username = "asd";
+		String password = "asd";
+
+		// Signing up User, Creating a Note and logging out.
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup(firstName, lastName, username, password);
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+		// Initializing Selenium Object Page and logging new user in.
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// Creating Note
+		HomePage homePage = new HomePage(driver);
+		homePage.clickNotesTabButton();
+		homePage.createNote("Any Title", "Any Description"); //Redirects to result page
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		ResultPage resultPage = new ResultPage(driver);
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickLogoutButton();
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		// LOGGING IN EXISTING USER AND DELETING NOTE.
+		loginPage.login(username, password);
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickNotesTabButton();
+		homePage.clickNotesDeleteAnchor();
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// VERIFYING NOTE WAS SUCCESSFULLY DELETED
+		homePage.clickNotesTabButton();
+		Assertions.assertFalse(homePage.firstNoteExists());
+
+	}
+
 }

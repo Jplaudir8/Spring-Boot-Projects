@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -32,6 +29,9 @@ public class HomePage {
 
     @FindBy(css="#noteEditButton")
     private WebElement noteEditButton;
+
+    @FindBy(css="#noteDeleteButton")
+    private WebElement noteDeleteButton;
 
     @FindBy(css="#noteModalLabel")
     private WebElement noteModalLabel;
@@ -66,15 +66,44 @@ public class HomePage {
     /**
      * Click 'Edit' Button
      */
-    public void clickNotesEditButton(){
+    public void clickNotesEditButton() {
         wait.until(ExpectedConditions.elementToBeClickable(noteEditButton));
         js.executeScript("arguments[0].click();", noteEditButton);
     }
 
     /**
+     * Click 'Delete' Button
+     */
+    public void clickNotesDeleteAnchor() {
+        wait.until(ExpectedConditions.elementToBeClickable(noteDeleteButton)).click();
+        //js.executeScript("arguments[0].click;", noteDeleteButton);
+    }
+
+    /**
+     * Retrieve true or false if note exists or no respectively.
+     *
+     * @return
+     */
+    public boolean firstNoteExists() {
+        return elementExists("noteTitleRow") && elementExists("noteDescriptionRow");
+    }
+
+    /**
+     * Verify if element exists
+     */
+    public boolean elementExists(String elementId){
+        try {
+            driver.findElement(By.id(elementId));
+            return true;
+        } catch(NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
      * Wait for 'Notes' Modal to load
      */
-    public void waitNoteModelPage(){
+    public void waitNoteModelPage() {
         wait.until(ExpectedConditions.elementToBeClickable(noteModalLabel));
     }
 
@@ -137,6 +166,7 @@ public class HomePage {
         js.executeScript("arguments[0].click();", saveChangesButton);
 
     }
+
 
 
 }
