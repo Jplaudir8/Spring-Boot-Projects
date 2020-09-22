@@ -11,8 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
-import javax.xml.transform.Result;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -47,6 +45,7 @@ class CloudStorageApplicationTests {
 	 * Test that verifies that the home page is not accessible
 	 * without logging in.
 	 */
+	@Order(1)
 	@Test
 	public void testHomePageNotAccessibleByUnauthorizedUser() {
 
@@ -66,6 +65,7 @@ class CloudStorageApplicationTests {
 	 * can access the home page, then logs out and verifies that the home
 	 * page is no longer accessible.
 	 */
+	@Order(2)
 	@Test
 	public void testSignupLoginLogoutNewUser() {
 
@@ -77,6 +77,7 @@ class CloudStorageApplicationTests {
 
 		// Verify '/signup' endpoint takes us to Sign Up page.
 		driver.get(baseURL + "/signup");
+		wait.until(ExpectedConditions.titleContains("Sign Up"));
 		Assertions.assertEquals("Sign Up", driver.getTitle());
 
 		// Initializing Selenium Object Page and signing up the new user.
@@ -84,6 +85,7 @@ class CloudStorageApplicationTests {
 		signupPage.signup(firstName, lastName, username, password); // Automatically redirects to the Login Page after signing up.
 
 		// Verify we were successfully redirected to Login page.
+		wait.until(ExpectedConditions.titleContains("Login"));
 		Assertions.assertEquals("Login", driver.getTitle());
 
 		// Initializing Selenium Object Page and logging new user in.
@@ -91,11 +93,13 @@ class CloudStorageApplicationTests {
 		loginPage.login(username, password); // Automatically redirects to home page.
 
 		// Verify we were successfully redirected to Home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
 		Assertions.assertEquals("Home", driver.getTitle());
 
 		// Log out user and verify it was successfully redirected to login page.
 		HomePage homePage = new HomePage(driver);
 		homePage.clickLogoutButton();
+		wait.until(ExpectedConditions.titleContains("Login"));
 		Assertions.assertEquals("Login", driver.getTitle());
 
 		// Verify Home page is no longer accessible after logging out.
@@ -107,8 +111,8 @@ class CloudStorageApplicationTests {
 	/**
 	 * Test that logs in an existing user, creates a note and verifies
 	 * that the note details are visible in the note list.
-	 * @throws InterruptedException
 	 */
+	@Order(3)
 	@Test
 	public void testCreateNoteWithExistingUser() {
 
@@ -169,14 +173,15 @@ class CloudStorageApplicationTests {
 	 * existing note, changes the note data, saves the changes, and verifies that the changes
 	 * appear in the note list.
 	 */
+	@Order(4)
 	@Test
 	public void testEditNote() {
 
 		// Data to be used
-		String firstName = "qwe";
-		String lastName = "qwe";
-		String username = "qwe";
-		String password = "qwe";
+		String firstName = "Larry";
+		String lastName = "Page";
+		String username = "larr123";
+		String password = "page123";
 
 		// Signing up User, Creating a Note and logging out.
 		driver.get(baseURL + "/signup");
@@ -208,7 +213,7 @@ class CloudStorageApplicationTests {
 		// LOGGING IN EXISTING USER AND EDITING NOTE.
 		String newNoteTitle = "To-Do List";
 		String newNoteDescription = "Walk the dog, Wash the Car";
-		loginPage.login("qwe", "qwe");
+		loginPage.login(username, password);
 		wait.until(ExpectedConditions.titleContains("Home"));
 		Assertions.assertEquals("Home", driver.getTitle());
 
@@ -235,13 +240,14 @@ class CloudStorageApplicationTests {
 	 * note button on an existing note, and verifies that the note no longer
 	 * appears in the note list.
 	 */
+	@Order(5)
 	@Test
 	public void testDeleteNote() {
 		// Data to be used
-		String firstName = "asd";
-		String lastName = "asd";
-		String username = "asd";
-		String password = "asd";
+		String firstName = "Jeff";
+		String lastName = "Bezos";
+		String username = "jeff123";
+		String password = "bez123";
 
 		// Signing up User, Creating a Note and logging out.
 		driver.get(baseURL + "/signup");
@@ -293,6 +299,7 @@ class CloudStorageApplicationTests {
 	 * verifies that the credential details are visible in the
 	 * credential list.
 	 */
+	@Order(6)
 	@Test
 	public void testCreateCredential() {
 		// Data to be used
@@ -347,6 +354,7 @@ class CloudStorageApplicationTests {
 	 * credential data, saves the changes, and verifies that the changes
 	 * appear in the credential list.
 	 */
+	@Order(7)
 	@Test
 	public void testEditCredential() {
 		// Data to be used
@@ -413,5 +421,72 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(newUrlCredential, newCredentials.getUrl());
 		Assertions.assertEquals(newUsernameCredential, newCredentials.getUsername());
 		Assertions.assertEquals(newPasswordCredential, newCredentials.getPassword());
+	}
+
+	/**
+	 * Test that logs in an existing user with existing credentials,
+	 * clicks the delete credential button on an existing credential,
+	 * and verifies that the credential no longer appears in the
+	 * credential list.
+	 */
+	@Order(8)
+	@Test
+	public void testDeleteCredential() {
+		// Data to be used
+		String firstName = "Michael";
+		String lastName = "Jackson";
+		String username = "mich123";
+		String password = "jack123";
+
+		// Signing up User, Creating a Credential and logging out.
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup(firstName, lastName, username, password);
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+		// Initializing Selenium Object Page and logging new user in.
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		// CREATING CREDENTIALS
+		String credentialUrl = "www.google.com";
+		String credentialUsername = "Martinez";
+		String credentialPassword = "Brothers";
+		HomePage homePage = new HomePage(driver);
+		homePage.clickCredentialsTabButton();
+		homePage.createCredentials(credentialUrl, credentialUsername, credentialPassword);
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		ResultPage resultPage = new ResultPage(driver);
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickLogoutButton();
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		// LOGGING IN EXISTING USER AND DELETING CREDENTIALS.
+		String newUrlCredential = "www.facebook.com";
+		String newUsernameCredential = "Buzz";
+		String newPasswordCredential = "Aldrin";
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickCredentialsTabButton();
+
+		// DELETING CREDENTIALS
+		homePage.clickCredentialDeleteAnchor();
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// VERIFYING NOTE WAS SUCCESSFULLY DELETED
+		homePage.clickCredentialsTabButton();
+		Assertions.assertFalse(homePage.firstCredentialExists());
+
 	}
 }

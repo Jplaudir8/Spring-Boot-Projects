@@ -14,7 +14,7 @@ public class HomePage {
     @FindBy(css="#logout-submit-button")
     private WebElement logoutSubmitButton;
 
-    // Note WebElements
+    // NOTE WEBELEMENTS
     @FindBy(css="#nav-notes-tab")
     private WebElement notesTabButton;
 
@@ -39,7 +39,7 @@ public class HomePage {
     @FindBy(css="#noteModalLabel")
     private WebElement noteModalLabel;
 
-    // Credentials WebElements
+    // CREDENTIAL WEBELEMENTS
     @FindBy(css="#nav-credentials-tab")
     private WebElement credentialsTabButton;
 
@@ -64,6 +64,10 @@ public class HomePage {
     @FindBy(css="#credentialEditButton")
     private WebElement credentialEditButton;
 
+    @FindBy(css="#credentialDeleteButton")
+    private WebElement credentialDeleteButton;
+
+
     private WebDriver driver;
     private WebDriverWait wait;
     private final JavascriptExecutor js;
@@ -82,6 +86,19 @@ public class HomePage {
         wait.until(ExpectedConditions.elementToBeClickable(logoutSubmitButton));
         js.executeScript("arguments[0].click();", logoutSubmitButton);
     }
+
+    /**
+     * Verify if html element exists
+     */
+    public boolean elementExists(String elementId){
+        try {
+            driver.findElement(By.id(elementId));
+            return true;
+        } catch(NoSuchElementException e) {
+            return false;
+        }
+    }
+
 
     // NOTES TAB
 
@@ -116,18 +133,6 @@ public class HomePage {
      */
     public boolean firstNoteExists() {
         return elementExists("noteTitleRow") && elementExists("noteDescriptionRow");
-    }
-
-    /**
-     * Verify if element exists
-     */
-    public boolean elementExists(String elementId){
-        try {
-            driver.findElement(By.id(elementId));
-            return true;
-        } catch(NoSuchElementException e) {
-            return false;
-        }
     }
 
     /**
@@ -236,6 +241,25 @@ public class HomePage {
     public void clickCredentialsEditButton() {
         wait.until(ExpectedConditions.elementToBeClickable(credentialEditButton));
         js.executeScript("arguments[0].click();", credentialEditButton);
+    }
+
+    /**
+     * Click 'Delete' Button
+     */
+    public void clickCredentialDeleteAnchor() {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialDeleteButton)).click();
+        //js.executeScript("arguments[0].click;", noteDeleteButton);
+    }
+
+    /**
+     * Retrieve true or false if note exists or no respectively.
+     *
+     * @return
+     */
+    public boolean firstCredentialExists() {
+        return elementExists("credentialUrlRow") &&
+                elementExists("credentialUserRow") &&
+                elementExists("credentialPassRow");
     }
 
     /**
