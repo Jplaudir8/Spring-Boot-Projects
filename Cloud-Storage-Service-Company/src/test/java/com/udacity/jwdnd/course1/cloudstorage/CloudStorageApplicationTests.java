@@ -170,7 +170,7 @@ class CloudStorageApplicationTests {
 	 * appear in the note list.
 	 */
 	@Test
-	public void testChangeNoteData() {
+	public void testEditNote() {
 
 		// Data to be used
 		String firstName = "qwe";
@@ -341,4 +341,77 @@ class CloudStorageApplicationTests {
 
 	}
 
+	/**
+	 * Test that logs in an existing user with existing credentials, clicks
+	 * the edit credential button on an existing credential, changes the
+	 * credential data, saves the changes, and verifies that the changes
+	 * appear in the credential list.
+	 */
+	@Test
+	public void testEditCredential() {
+		// Data to be used
+		String firstName = "Neil";
+		String lastName = "Armstrong";
+		String username = "neil123";
+		String password = "arm123";
+
+		// Signing up User, Creating a Credential and logging out.
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup(firstName, lastName, username, password);
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+		// Initializing Selenium Object Page and logging new user in.
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		// CREATING CREDENTIALS
+		String credentialUrl = "www.google.com";
+		String credentialUsername = "Martinez";
+		String credentialPassword = "Brothers";
+		HomePage homePage = new HomePage(driver);
+		homePage.clickCredentialsTabButton();
+		homePage.createCredentials(credentialUrl, credentialUsername, credentialPassword);
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		ResultPage resultPage = new ResultPage(driver);
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickLogoutButton();
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		// LOGGING IN EXISTING USER AND EDITING CREDENTIALS.
+		String newUrlCredential = "www.facebook.com";
+		String newUsernameCredential = "Buzz";
+		String newPasswordCredential = "Aldrin";
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickCredentialsTabButton();
+
+		// EDITING CREDENTIALS
+		homePage.clickCredentialsEditButton();
+		homePage.waitCredentialsModelPage();
+		Credential firstCredentials = homePage.getFirstCredentials();
+
+		homePage.updateCredentials(firstCredentials, newUrlCredential, newUsernameCredential, newPasswordCredential); //Redirects to result page
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		resultPage.resultMsgAnchorClick(); // Redirects to Home Page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// VERIFY EDITED CREDENTIALS
+		homePage.clickCredentialsTabButton();
+		homePage.clickCredentialsEditButton();
+		homePage.waitCredentialsModelPage();
+		Credential newCredentials = homePage.getFirstCredentials();
+		Assertions.assertEquals(newUrlCredential, newCredentials.getUrl());
+		Assertions.assertEquals(newUsernameCredential, newCredentials.getUsername());
+		Assertions.assertEquals(newPasswordCredential, newCredentials.getPassword());
+	}
 }

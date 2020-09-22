@@ -182,19 +182,17 @@ public class HomePage {
      * @param newNoteDescription new note description to replace into current note description
      */
     public void updateNote(Note firstNote, String newNoteTitle, String newNoteDescription) {
-        Note newNote = firstNote;
-        newNote.setNoteTitle(newNoteTitle);
-        newNote.setNoteDescription(newNoteDescription);
+        firstNote.setNoteTitle(newNoteTitle);
+        firstNote.setNoteDescription(newNoteDescription);
         // Open Edit View
         js.executeScript("arguments[0].click();", noteEditButton);
         // Clear current data
         noteTitleInput.clear();
         noteDescriptionInput.clear();
         // Insert new data of note object into input fields
-        js.executeScript("arguments[0].value='" + newNote.getNoteTitle() + "';", this.noteTitleInput);
-        js.executeScript("arguments[0].value='" + newNote.getNoteDescription() + "';", this.noteDescriptionInput);
+        js.executeScript("arguments[0].value='" + firstNote.getNoteTitle() + "';", this.noteTitleInput);
+        js.executeScript("arguments[0].value='" + firstNote.getNoteDescription() + "';", this.noteDescriptionInput);
         js.executeScript("arguments[0].click();", noteSaveChangesButton);
-
     }
 
 
@@ -252,6 +250,23 @@ public class HomePage {
         String password = getValueFromInput("credential-password");
         Credential firstCredential = new Credential(null, url, username, null, password, null);
         return firstCredential;
+    }
+
+    public void updateCredentials(Credential firstCredentials, String newUrlCredential, String newUsernameCredential, String newPasswordCredential) {
+        firstCredentials.setUrl(newUrlCredential);
+        firstCredentials.setUsername(newUsernameCredential);
+        firstCredentials.setPassword(newPasswordCredential);
+        // Open Edit View
+        js.executeScript("arguments[0].click();", credentialEditButton);
+        // Clear current data
+        credentialUrlInput.clear();
+        credentialUsernameInput.clear();
+        credentialPasswordInput.clear();
+        // Insert new data of note object into input fields
+        js.executeScript("arguments[0].value='" + firstCredentials.getUrl() + "';", this.credentialUrlInput);
+        js.executeScript("arguments[0].value='" + firstCredentials.getUsername() + "';", this.credentialUsernameInput);
+        js.executeScript("arguments[0].value='" + firstCredentials.getPassword() + "';", this.credentialPasswordInput);
+        js.executeScript("arguments[0].click();", credentialSaveChangesButton);
     }
 
 }

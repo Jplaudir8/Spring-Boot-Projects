@@ -7,7 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ResultPage {
 
-
     @FindBy(tagName = "a")
     private WebElement resultMsgAnchor;
 
