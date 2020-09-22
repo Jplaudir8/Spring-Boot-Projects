@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -9,9 +10,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
 
+
     @FindBy(css="#logout-submit-button")
     private WebElement logoutSubmitButton;
 
+    // Note WebElements
     @FindBy(css="#nav-notes-tab")
     private WebElement notesTabButton;
 
@@ -24,8 +27,8 @@ public class HomePage {
     @FindBy(css="#note-description")
     private WebElement noteDescriptionInput;
 
-    @FindBy(css="#saveChangesButton")
-    private WebElement saveChangesButton;
+    @FindBy(css="#noteSaveChangesButton")
+    private WebElement noteSaveChangesButton;
 
     @FindBy(css="#noteEditButton")
     private WebElement noteEditButton;
@@ -35,6 +38,31 @@ public class HomePage {
 
     @FindBy(css="#noteModalLabel")
     private WebElement noteModalLabel;
+
+    // Credentials WebElements
+    @FindBy(css="#nav-credentials-tab")
+    private WebElement credentialsTabButton;
+
+    @FindBy(css="#addCredentialsButton")
+    private WebElement addCredentialsButton;
+
+    @FindBy(css="#credentialModalLabel")
+    private WebElement credentialModalLabel;
+
+    @FindBy(css="#credential-url")
+    private WebElement credentialUrlInput;
+
+    @FindBy(css="#credential-username")
+    private WebElement credentialUsernameInput;
+
+    @FindBy(css="#credential-password")
+    private WebElement credentialPasswordInput;
+
+    @FindBy(css="#credentialSaveChangesButton")
+    private WebElement credentialSaveChangesButton;
+
+    @FindBy(css="#credentialEditButton")
+    private WebElement credentialEditButton;
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -47,7 +75,9 @@ public class HomePage {
         this.js = (JavascriptExecutor) webDriver;
     }
 
-    // Log out user
+    /**
+     * Log out user
+     */
     public void clickLogoutButton() {
         wait.until(ExpectedConditions.elementToBeClickable(logoutSubmitButton));
         js.executeScript("arguments[0].click();", logoutSubmitButton);
@@ -127,7 +157,7 @@ public class HomePage {
         waitNoteModelPage();
         js.executeScript("arguments[0].value='"+ noteTitle +"';", this.noteTitleInput);
         js.executeScript("arguments[0].value='"+ noteDescription +"';", this.noteDescriptionInput);
-        js.executeScript("arguments[0].click();", saveChangesButton);
+        js.executeScript("arguments[0].click();", noteSaveChangesButton);
     }
 
     /**
@@ -163,10 +193,65 @@ public class HomePage {
         // Insert new data of note object into input fields
         js.executeScript("arguments[0].value='" + newNote.getNoteTitle() + "';", this.noteTitleInput);
         js.executeScript("arguments[0].value='" + newNote.getNoteDescription() + "';", this.noteDescriptionInput);
-        js.executeScript("arguments[0].click();", saveChangesButton);
+        js.executeScript("arguments[0].click();", noteSaveChangesButton);
 
     }
 
 
+    // CREDENTIALS TAB
+
+    /**
+     * Wait for 'Credentials' Modal to load
+     */
+    public void waitCredentialsModelPage() {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialModalLabel));
+    }
+
+    /**
+     * Click 'Credentials' tab
+     */
+    public void clickCredentialsTabButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialsTabButton));
+        js.executeScript("arguments[0].click();", credentialsTabButton);
+    }
+
+    /**
+     * Create new credentials.
+     *
+     * @param credentialUrl
+     * @param credentialUsername
+     * @param credentialPassword
+     */
+    public void createCredentials(String credentialUrl, String credentialUsername, String credentialPassword) {
+        wait.until(ExpectedConditions.elementToBeClickable(addCredentialsButton));
+        js.executeScript("arguments[0].click();", addCredentialsButton);
+        waitCredentialsModelPage();
+        js.executeScript("arguments[0].value='"+ credentialUrl +"';", this.credentialUrlInput);
+        js.executeScript("arguments[0].value='"+ credentialUsername +"';", this.credentialUsernameInput);
+        js.executeScript("arguments[0].value='"+ credentialPassword +"';", this.credentialPasswordInput);
+        js.executeScript("arguments[0].click();", credentialSaveChangesButton);
+    }
+
+    /**
+     * Click Credentials 'Edit' Button
+     */
+    public void clickCredentialsEditButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(credentialEditButton));
+        js.executeScript("arguments[0].click();", credentialEditButton);
+    }
+
+    /**
+     * Get 1st Credentials created
+     *
+     * @return
+     */
+    public Credential getFirstCredentials() {
+        // Retrieve data and insert it in firstNote object
+        String url = getValueFromInput("credential-url");
+        String username = getValueFromInput("credential-username");
+        String password = getValueFromInput("credential-password");
+        Credential firstCredential = new Credential(null, url, username, null, password, null);
+        return firstCredential;
+    }
 
 }

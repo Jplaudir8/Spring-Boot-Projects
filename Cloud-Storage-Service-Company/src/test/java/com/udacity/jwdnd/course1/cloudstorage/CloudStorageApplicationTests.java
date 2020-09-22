@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import javax.xml.transform.Result;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
@@ -151,7 +154,7 @@ class CloudStorageApplicationTests {
 		wait.until(ExpectedConditions.titleContains("Home"));
 		homePage.clickNotesTabButton();
 
-		// VERIFY CREATED NOTE
+		// VERIFY NOTE WAS CREATED
 		homePage.clickNotesEditButton();
 		homePage.waitNoteModelPage();
 		Note firstNote = homePage.getFirstNote();
@@ -282,6 +285,59 @@ class CloudStorageApplicationTests {
 		// VERIFYING NOTE WAS SUCCESSFULLY DELETED
 		homePage.clickNotesTabButton();
 		Assertions.assertFalse(homePage.firstNoteExists());
+
+	}
+
+	/**
+	 * Test that logs in an existing user, creates a credential and
+	 * verifies that the credential details are visible in the
+	 * credential list.
+	 */
+	@Test
+	public void testCreateCredential() {
+		// Data to be used
+		String firstName = "Elon";
+		String lastName = "Musk";
+		String username = "elo123";
+		String password = "mus123";
+
+		// Signing up User, Creating a Note and logging out.
+		driver.get(baseURL + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup(firstName, lastName, username, password);
+		wait.until(ExpectedConditions.titleContains("Login"));
+		Assertions.assertEquals("Login", driver.getTitle());
+		// Initializing Selenium Object Page and logging new user in.
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password); // Automatically redirects to home page.
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+
+		// CREATING CREDENTIALS
+		String credentialUrl = "www.google.com";
+		String credentialUsername = "Martinez";
+		String credentialPassword = "Brothers";
+		HomePage homePage = new HomePage(driver);
+		homePage.clickCredentialsTabButton();
+		homePage.createCredentials(credentialUrl, credentialUsername, credentialPassword);
+		wait.until(ExpectedConditions.titleContains("Result"));
+		Assertions.assertEquals("Result", driver.getTitle());
+		ResultPage resultPage = new ResultPage(driver);
+		resultPage.resultMsgAnchorClick(); // Redirects to home page
+		wait.until(ExpectedConditions.titleContains("Home"));
+		Assertions.assertEquals("Home", driver.getTitle());
+		homePage.clickCredentialsTabButton();
+
+
+		// VERIFY CREDENTIALS WERE CREATED
+		homePage.clickCredentialsEditButton();
+		homePage.waitCredentialsModelPage();
+		Credential firstCredentials = homePage.getFirstCredentials();
+
+		Assertions.assertEquals(credentialUrl, firstCredentials.getUrl());
+		Assertions.assertEquals(credentialUsername, firstCredentials.getUsername());
+		Assertions.assertEquals(credentialPassword, firstCredentials.getPassword());
 
 	}
 
