@@ -20,6 +20,15 @@ public class DogController {
         this.dogService = dogService;
     }
 
+    /* Another option to add the service could be:
+    @Autowired
+    private DogService dogService;
+
+    public void DogController(DogService dogService) {
+        this.dogService = dogService;
+    }
+    */
+
     @GetMapping("/dogs")
     public ResponseEntity<List<Dog>> getAllDogs() {
         List<Dog> list = dogService.getAllDogs();
