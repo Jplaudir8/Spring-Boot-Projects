@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class DogServiceImpl implements DogService {
-
     @Autowired
     DogRepository dogRepository;
 
@@ -35,6 +34,5 @@ public class DogServiceImpl implements DogService {
     public List<String> getAllDogNames() {
         return (List<String>) dogRepository.getAllDogNames();
     }
-
 
 }
