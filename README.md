@@ -11,3 +11,4 @@ This directory contains some exercises/projects that have some minor configurati
 
 Content:
 - DogRestAPI: REST API that returns a list of dogs from an embedded H2 in-memory database.
+- DogGraphQL: GraphQL API that returns a list of dogs from an embedded H2 in-memory database.
