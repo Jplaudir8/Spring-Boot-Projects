@@ -7,7 +7,7 @@ This project consists of a cloud storage service which will enable the user:
 
 # Other
 ### Review Exercises
-This directory contains some exercises/projects that have some minor configurations and added java code to help review Spring Boot concepts seen in past courses. Therefore, do not see this directory as a personal project but as a review exercise.
+This directory contains some exercises/projects that have some minor configurations and added java code to help review Spring Boot concepts seen in past courses. Therefore, do not see this directory as a personal project but as a concept review exercise.
 
 Content:
 - DogRestAPI: REST API that returns a list of dogs from an embedded H2 in-memory database.
