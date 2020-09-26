@@ -13,37 +13,37 @@ Content:
 - DogRestAPI: REST API that returns a list of dogs from an embedded H2 in-memory database.
 - DogGraphQL: GraphQL API that returns a list of dogs from an embedded H2 in-memory database.Trying GraphQL queries such as:
         
-        (Postman Syntax)
-        ```GraphQL
-        {
-          "query":"{ findAllDogs {id name breed origin} }”
-        }
+(Postman Syntax)
+```GraphQL
+{
+   "query":"{ findAllDogs {id name breed origin} }”
+}
 
-        {
-          "query":"{ findDogById(id:4) {id name} }”
-        }
+{
+   "query":"{ findDogById(id:4) {id name} }”
+}
 
-        {
-          "query":"mutation { updateDogName(newName: \"Lenka\", id:4) {id name} }"
-        }
-        ```
-        (GraphiQL Syntax)
-        ```GraphQL
-        query {
-          findAllDogs {
-            id
-            name
-            breed
-            origin
-          }
-        }
+{
+   "query":"mutation { updateDogName(newName: \"Lenka\", id:4) {id name} }"
+}
+```
+(GraphiQL Syntax)
+```GraphQL
+query {
+   findAllDogs {
+     id
+     name
+     breed
+     origin
+   }
+}
 
-        query {
-          findDogById(id:2) {
-            id
-            name
-            breed
-            origin
-          }
-        }
-        ```
+query {
+   findDogById(id:2) {
+      id
+      name
+      breed
+      origin
+    }
+}
+```
