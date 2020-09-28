@@ -38,12 +38,14 @@ query {
 ```
 
 ## Microservices
-For this exercise I have created an Eureka Server and just one microservice which retrieves information about dogs.
+For this exercise I have created a Eureka Server (Our Service Registry) and one microservice, Dog Microservice, which retrieves information about dogs. These microservices will use the Eureka client to register themselves to the Eureka Server.
 
 Architecture for this exercise:
 <p align="center">
     <img src="https://github.com/Jplaudir8/Spring-Boot-Projects/blob/master/Review-Exercises/Microservices/MSA%20Image.png" width="600" alt="" title="Color Scheme Used">
 </p>
+
+This dog microservice uses Spring data to implement a JPA Dog repository and Spring Data REST to provide a RESTful interface to Dog information.
 
 - Do not forget that if a microservice is not registered as an Eureka client, then:
   1. The microservice cannot be discovered.
