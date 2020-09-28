@@ -44,6 +44,7 @@ Architecture for this exercise:
 <p align="center">
     <img src="https://github.com/Jplaudir8/Spring-Boot-Projects/blob/master/Review-Exercises/Microservices/MSA%20Image.png" width="600" alt="" title="Color Scheme Used">
 </p>
+
 - Do not forget that if a microservice is not registered as an Eureka client, then:
   1. The microservice cannot be discovered.
   2. Clients of the microservice must use the host name and port to access the service.
