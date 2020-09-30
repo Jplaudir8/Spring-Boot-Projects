@@ -24,7 +24,7 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public String getBreedById(Long id) {
+    public String getBreedById(long id) {
         Optional<String> optionalBreed = Optional.ofNullable(dogRepository.getBreedById(id));
         String breed = optionalBreed.orElseThrow(DogNotFoundException::new);
         return breed;
