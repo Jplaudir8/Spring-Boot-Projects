@@ -46,8 +46,8 @@ public class DogControllerIntegrationTest {
 
     @Test
     public void testGetBreedById() {
-        ResponseEntity<Dog> response =
-                this.restTemplate.getForEntity("http://localhost:" + port + "/1/breed/", Dog.class);
+        ResponseEntity<String> response =
+                this.restTemplate.getForEntity("http://localhost:" + port + "/1/breed/", String.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
