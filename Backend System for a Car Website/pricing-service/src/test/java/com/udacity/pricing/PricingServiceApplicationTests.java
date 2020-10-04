@@ -28,6 +28,7 @@ public class PricingServiceApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	// Performing integration test.
 	@Test
 	public void testGetAllPrices() {
 		ResponseEntity<Price> response =
