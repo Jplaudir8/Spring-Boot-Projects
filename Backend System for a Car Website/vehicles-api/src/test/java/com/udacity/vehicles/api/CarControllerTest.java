@@ -4,9 +4,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -112,11 +110,9 @@ public class CarControllerTest {
     @Test
     public void findCar() throws Exception {
         /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   a vehicle by ID. This should utilize the car from `getCar()` below.
+         * Add a test to check that the `get` method works by calling
+         *   a vehicle by ID.
          */
-        Car car = getCar();
-        System.out.println("CAR ID: " + car.getId());
         mvc.perform(get(new URI("/cars/1"))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -131,18 +127,35 @@ public class CarControllerTest {
     @Test
     public void deleteCar() throws Exception {
         /**
-         * TODO: Add a test to check whether a vehicle is appropriately deleted
-         *   when the `delete` method is called from the Car Controller. This
-         *   should utilize the car from `getCar()` below.
+         * Add a test to check whether a vehicle is appropriately deleted
+         *   when the `delete` method is called from the Car Controller.
          */
         Car car = getCar();
-        System.out.println("CAR ID: " + car.getId());
         mvc.perform(delete(new URI("/cars/1"))
                 .content(json.write(car).getJson())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isNoContent());
+    }
+
+    /**
+     * Tests the update of a single car by using getCar().
+     * @throws Exception if the update operation of a vehicle fails
+     */
+    @Test
+    public void putCar() throws Exception {
+        /**
+         * Add a test to check whether a vehicle is appropriately updated
+         *   when the `put` method is called from the Car Controller.
+         */
+        Car car = getCar();
+        mvc.perform(put(new URI("/cars/1"))
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andExpect(status().isOk());
     }
 
     /**
