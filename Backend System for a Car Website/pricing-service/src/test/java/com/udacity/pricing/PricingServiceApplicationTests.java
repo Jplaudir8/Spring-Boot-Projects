@@ -35,9 +35,9 @@ public class PricingServiceApplicationTests {
 
 	// Performing integration test.
 	@Test
-	public void testGetAllPrices() {
+	public void testGetPriceById() {
 		ResponseEntity<Price> response =
-				this.restTemplate.getForEntity("http://localhost:" + port + "/prices", Price.class);
+				this.restTemplate.getForEntity("http://localhost:" + port + "/services/price?vehicleId=1", Price.class);
 
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 	}
