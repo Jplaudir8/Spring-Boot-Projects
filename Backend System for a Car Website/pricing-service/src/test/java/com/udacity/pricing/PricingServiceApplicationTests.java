@@ -28,6 +28,11 @@ public class PricingServiceApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@Test
+	public void contextLoads() {
+
+	}
+
 	// Performing integration test.
 	@Test
 	public void testGetAllPrices() {
