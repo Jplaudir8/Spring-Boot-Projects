@@ -42,7 +42,7 @@ For this exercise I have created a Eureka Server (Our Service Registry) and one 
 
 Architecture for this exercise:
 <p align="center">
-    <img src="https://github.com/Jplaudir8/Spring-Boot-Projects/blob/master/Review-Exercises/Microservices/MSA%20Image.png" width="600" alt="" title="Color Scheme Used">
+    <img src="https://github.com/Jplaudir8/Spring-Boot-Projects/blob/master/Review-Exercises/Web%20Services%20and%20APIs/Microservices/MSA%20Image.png" width="600" alt="" title="Color Scheme Used">
 </p>
 
 This dog microservice uses Spring data to implement a JPA Dog repository and Spring Data REST to provide a RESTful interface to Dog information.
