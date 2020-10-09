@@ -48,14 +48,6 @@ public class Delivery {
         this.address = address_full;
     }
 
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
-
     public LocalDateTime getDeliveryTime() {
         return deliveryTime;
     }
