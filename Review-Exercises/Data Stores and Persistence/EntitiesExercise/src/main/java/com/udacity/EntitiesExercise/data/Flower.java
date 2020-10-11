@@ -13,12 +13,12 @@ public class Flower {
     @GeneratedValue
     private Long id;
 
-    @Nationalized // should use 2Nationalized instead of @Type=nstring. Remember this helps with support to international language characters.
-    private String name;
+    //@Nationalized // should use @Nationalized instead of @Type=nstring. Remember this helps with support to international language characters.
+    //private String name;
     private String color;
-    @Type(type = "numeric")
-    @Column(precision = 12, scale = 8)
-    private BigDecimal price; // BigDecimal is the standard Java class for currency math.
+    //@Type(type = "numeric")
+    //@Column(precision = 12, scale = 8)
+    //private BigDecimal price; // BigDecimal is the standard Java class for currency math.
 
     public Long getId() {
         return id;
@@ -27,7 +27,7 @@ public class Flower {
     public void setId(Long id) {
         this.id = id;
     }
-
+    /*
     public String getName() {
         return name;
     }
@@ -35,6 +35,7 @@ public class Flower {
     public void setName(String name) {
         this.name = name;
     }
+    */
 
     public String getColor() {
         return color;
@@ -43,12 +44,12 @@ public class Flower {
     public void setColor(String color) {
         this.color = color;
     }
-
+    /*
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
+    }*/
 }
