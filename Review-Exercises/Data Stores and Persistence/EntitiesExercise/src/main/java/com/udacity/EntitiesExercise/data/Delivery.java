@@ -3,26 +3,29 @@ package com.udacity.EntitiesExercise.data;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Delivery {
+
     @Id
     @GeneratedValue
     private Long id;
 
     @Nationalized
     private String recipentName;
+
     @Column(name = "address_full", length = 500) // Setting name for column in DB table and max length up to 500 characters.
     private String address;
+
     private LocalDateTime deliveryTime; // This includes both date and time, so it is simpler than having two separate fields.
     @Type(type = "yes_no") // This will store the values as Y or N in the DB instead of True/False.
     private Boolean isCompleted;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery") // Lazy fetch is often a good idea for collection attributes.
+    private List<Plant> plants;
 
     public Long getId() {
         return id;
