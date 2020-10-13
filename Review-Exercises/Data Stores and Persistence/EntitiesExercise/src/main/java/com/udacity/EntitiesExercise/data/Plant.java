@@ -1,5 +1,7 @@
 package com.udacity.EntitiesExercise.data;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.udacity.EntitiesExercise.Views;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
 
@@ -17,9 +19,11 @@ public class Plant {
     @GeneratedValue
     private Long id;
 
+    @JsonView(Views.Public.class)
     @Nationalized
     private String name;
 
+    @JsonView(Views.Public.class)
     @Type(type = "numeric")
     @Column(precision = 12, scale = 8)
     private BigDecimal price;
