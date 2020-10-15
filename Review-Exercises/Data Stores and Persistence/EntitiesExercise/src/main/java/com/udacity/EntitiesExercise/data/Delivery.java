@@ -24,7 +24,10 @@ public class Delivery {
     @Type(type = "yes_no") // This will store the values as Y or N in the DB instead of True/False.
     private Boolean isCompleted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery") // Lazy fetch is often a good idea for collection attributes.
+    // Lazy fetch is often a good idea for collection attributes. Also added
+    // CascadeType.REMOVE to automatically clear any associated plants when
+    // removed.
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.REMOVE)
     private List<Plant> plants;
 
     public Long getId() {
