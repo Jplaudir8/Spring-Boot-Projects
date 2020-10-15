@@ -27,7 +27,7 @@ public class Delivery {
     // Lazy fetch is often a good idea for collection attributes. Also added
     // CascadeType.REMOVE to automatically clear any associated plants when
     // removed.
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.ALL)
     private List<Plant> plants;
 
     public Long getId() {
@@ -54,6 +54,14 @@ public class Delivery {
         this.address = address_full;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public LocalDateTime getDeliveryTime() {
         return deliveryTime;
     }
@@ -68,5 +76,13 @@ public class Delivery {
 
     public void setCompleted(Boolean completed) {
         isCompleted = completed;
+    }
+
+    public List<Plant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<Plant> plants) {
+        this.plants = plants;
     }
 }
