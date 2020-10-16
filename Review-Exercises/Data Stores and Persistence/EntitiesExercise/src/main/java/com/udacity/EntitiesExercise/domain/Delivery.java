@@ -1,4 +1,4 @@
-package com.udacity.EntitiesExercise.data;
+package com.udacity.EntitiesExercise.domain;
 
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @NamedQuery (
         name = "Delivery.findByName",
-        query = "select d from Delivery d where d.name = :name"
+        query = "select d from Delivery d where d.recipentName = :name"
 )
 
 @Entity
@@ -26,6 +26,7 @@ public class Delivery {
     private String address;
 
     private LocalDateTime deliveryTime; // This includes both date and time, so it is simpler than having two separate fields.
+
     @Type(type = "yes_no") // This will store the values as Y or N in the DB instead of True/False.
     private Boolean isCompleted;
 
@@ -79,8 +80,8 @@ public class Delivery {
         return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
-        isCompleted = completed;
+    public void setCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     public List<Plant> getPlants() {

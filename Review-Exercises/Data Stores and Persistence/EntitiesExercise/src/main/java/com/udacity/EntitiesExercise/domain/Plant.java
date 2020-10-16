@@ -1,4 +1,4 @@
-package com.udacity.EntitiesExercise.data;
+package com.udacity.EntitiesExercise.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.udacity.EntitiesExercise.Views;

@@ -1,6 +1,6 @@
 package com.udacity.EntitiesExercise.controller;
 
-import com.udacity.EntitiesExercise.data.Delivery;
+import com.udacity.EntitiesExercise.domain.Delivery;
 import com.udacity.EntitiesExercise.repository.RecipientAndPrice;
 import com.udacity.EntitiesExercise.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +21,5 @@ public class DeliveryController {
     public RecipientAndPrice getBill(@PathVariable Long deliveryId) {
         return deliveryService.getBill(deliveryId);
     }
-    
+
 }

@@ -1,7 +1,7 @@
 package com.udacity.EntitiesExercise.repository;
 
-import com.udacity.EntitiesExercise.data.Delivery;
-import com.udacity.EntitiesExercise.data.Plant;
+import com.udacity.EntitiesExercise.domain.Delivery;
+import com.udacity.EntitiesExercise.domain.Plant;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

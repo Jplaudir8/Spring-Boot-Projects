@@ -1,9 +1,8 @@
-package com.udacity.EntitiesExercise.data;
+package com.udacity.EntitiesExercise.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "plant")
 public class Flower extends Plant {
 
     private String color;

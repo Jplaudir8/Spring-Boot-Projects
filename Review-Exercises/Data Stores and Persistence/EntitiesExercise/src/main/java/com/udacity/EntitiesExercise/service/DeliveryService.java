@@ -1,6 +1,6 @@
 package com.udacity.EntitiesExercise.service;
 
-import com.udacity.EntitiesExercise.data.Delivery;
+import com.udacity.EntitiesExercise.domain.Delivery;
 import com.udacity.EntitiesExercise.repository.DeliveryRepository;
 import com.udacity.EntitiesExercise.repository.RecipientAndPrice;
 import org.springframework.beans.factory.annotation.Autowired;
