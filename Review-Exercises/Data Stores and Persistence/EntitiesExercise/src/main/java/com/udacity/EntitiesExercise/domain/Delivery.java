@@ -36,6 +36,14 @@ public class Delivery {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.ALL)
     private List<Plant> plants;
 
+    public Delivery(){}
+
+    public Delivery(String recipentName, String address, LocalDateTime deliveryTime){
+        this.recipentName = recipentName;
+        this.address = address;
+        this.deliveryTime = deliveryTime;
+    }
+
     public Long getId() {
         return id;
     }
