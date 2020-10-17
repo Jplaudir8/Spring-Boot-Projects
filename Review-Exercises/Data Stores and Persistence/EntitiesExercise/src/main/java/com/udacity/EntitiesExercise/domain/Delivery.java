@@ -28,7 +28,7 @@ public class Delivery {
     private LocalDateTime deliveryTime; // This includes both date and time, so it is simpler than having two separate fields.
 
     @Type(type = "yes_no") // This will store the values as Y or N in the DB instead of True/False.
-    private Boolean isCompleted;
+    private Boolean completed;
 
     // Lazy fetch is often a good idea for collection attributes. Also added
     // CascadeType.REMOVE to automatically clear any associated plants when
@@ -77,11 +77,11 @@ public class Delivery {
     }
 
     public Boolean getCompleted() {
-        return isCompleted;
+        return completed;
     }
 
-    public void setCompleted(Boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
     public List<Plant> getPlants() {
