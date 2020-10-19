@@ -25,8 +25,8 @@ public class testPlantRepository {
 
     @Test
     public void testPriceLessThan() {
-        Plant p = testEntityManager.persist(new Plant("Eucaliptus", 4.99));
-        testEntityManager.persist(new Plant ("Sunflower", 5.99));
+        Plant p = testEntityManager.persist(new Plant("Eucaliptus", BigDecimal.valueOf(4.99)));
+        testEntityManager.persist(new Plant ("Sunflower", BigDecimal.valueOf(5.99)));
 
         List<Plant> cheapPlant = plantRepository.findByPriceLessThan(BigDecimal.valueOf(5));
 
@@ -39,7 +39,7 @@ public class testPlantRepository {
 
     @Test
     public void testDeliveryCompleted() {
-        Plant p = testEntityManager.persist(new Plant("Rose", 9.99));
+        Plant p = testEntityManager.persist(new Plant("Rose", BigDecimal.valueOf(9.99)));
         Delivery d = testEntityManager.persist(new Delivery("Leonard Bernstein", "234 West Side", LocalDateTime.now()));
 
         d.setPlants(Lists.newArrayList(p));

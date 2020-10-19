@@ -31,9 +31,9 @@ public class Plant {
 
     public Plant() {}
 
-    public Plant(String name, double price) {
+    public Plant(String name, BigDecimal price) {
         this.name = name;
-        this.price = BigDecimal.valueOf(price);
+        this.price = price;
     }
 
     public Long getId() {
