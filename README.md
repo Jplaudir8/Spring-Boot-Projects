@@ -14,6 +14,7 @@ In this project I created a REST API to store vehicle data. The primary Vehicles
 
 ### Critter Chronologer
 Project which consists of the design and implementation of the data model for Critter Chronologer, a Software as a Service application that provides a scheduling interface for a small business that takes care of animals. This Spring Boot project will allow users to create pets, owners, and employees, and then schedule events for employees to provide services for pets.
+This application will store all the relevant data in a MySQL Database and allow a predefined controller layer to send and receive updates. You'll have to design all the data objects on the back end and create the data and service layers to update and retrieve them.
 
 # Other
 ### Review Exercises
