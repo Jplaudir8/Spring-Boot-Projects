@@ -12,6 +12,8 @@ In this project I created a REST API to store vehicle data. The primary Vehicles
 - The architecture follows the Eureka MSA.
 - Unit and Integration tests have been added.
 
+### Critter Chronologer
+Project which consists of the design and implementation of the data model for Critter Chronologer, a Software as a Service application that provides a scheduling interface for a small business that takes care of animals. This Spring Boot project will allow users to create pets, owners, and employees, and then schedule events for employees to provide services for pets.
 
 # Other
 ### Review Exercises
