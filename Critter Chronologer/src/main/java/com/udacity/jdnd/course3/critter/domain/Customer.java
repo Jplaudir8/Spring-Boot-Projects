@@ -19,4 +19,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Pet> pets;
+
+    /* Getters and setters to be added after finishing with definition of entity */
 }

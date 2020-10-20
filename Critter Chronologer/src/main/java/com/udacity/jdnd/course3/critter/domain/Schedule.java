@@ -29,4 +29,6 @@ public class Schedule {
             inverseJoinColumns = { @JoinColumn(name = "employee_id") }
     )
     private List<Employee> employees;
+
+    /* Getters and setters to be added after finishing with definition of entity */
 }

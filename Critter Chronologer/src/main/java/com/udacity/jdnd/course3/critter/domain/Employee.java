@@ -20,4 +20,6 @@ public class Employee {
 
     @Type(type = "string")
     private EmployeeSkill skills;
+
+    /* Getters and setters to be added after finishing with definition of entity */
 }

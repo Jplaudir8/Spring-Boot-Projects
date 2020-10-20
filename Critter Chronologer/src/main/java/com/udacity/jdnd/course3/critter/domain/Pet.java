@@ -27,4 +27,6 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    /* Getters and setters to be added after finishing with definition of entity */
 }
