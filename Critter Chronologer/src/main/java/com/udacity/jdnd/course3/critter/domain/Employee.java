@@ -4,10 +4,8 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -20,6 +18,9 @@ public class Employee {
 
     @Type(type = "string")
     private EmployeeSkill skills;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Schedule> schedules;
 
     /* Getters and setters to be added after finishing with definition of entity */
 }

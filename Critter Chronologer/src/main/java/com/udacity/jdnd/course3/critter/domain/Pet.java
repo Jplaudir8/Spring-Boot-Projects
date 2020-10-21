@@ -6,6 +6,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Pet {
@@ -27,6 +30,9 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "pet")
+    private List<Schedule> schedules;
 
     /* Getters and setters to be added after finishing with definition of entity */
 }

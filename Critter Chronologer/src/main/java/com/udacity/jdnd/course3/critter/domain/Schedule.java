@@ -14,7 +14,7 @@ public class Schedule {
     private LocalDate date;
     private String activities;
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(
             name = "schedule_pet",
             joinColumns = { @JoinColumn(name = "schedule_id") },
@@ -28,7 +28,15 @@ public class Schedule {
             joinColumns = { @JoinColumn(name = "schedule_id") },
             inverseJoinColumns = { @JoinColumn(name = "employee_id") }
     )
-    private List<Employee> employees;
+    private List<Employee> employees;*/
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 
     /* Getters and setters to be added after finishing with definition of entity */
 }
