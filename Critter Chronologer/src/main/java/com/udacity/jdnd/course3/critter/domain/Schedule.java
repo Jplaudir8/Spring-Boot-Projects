@@ -1,18 +1,25 @@
 package com.udacity.jdnd.course3.critter.domain;
 
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Schedule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private LocalDate date;
-    private String activities;
+
+    @ElementCollection
+    @Type(type = "string")
+    private Set<EmployeeSkill> activities;
 
     /*@ManyToMany
     @JoinTable(
@@ -30,13 +37,13 @@ public class Schedule {
     )
     private List<Employee> employees;*/
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @ManyToMany(targetEntity = Employee.class)
+    //@JoinColumn(name = "employee_id")
+    private List<Employee> employees;
 
-    @ManyToOne
-    @JoinColumn(name = "pet_id")
-    private Pet pet;
+    @ManyToMany(targetEntity = Pet.class)
+    //@JoinColumn(name = "pet_id")
+    private List<Pet> pets;
 
     /* Getters and setters to be added after finishing with definition of entity */
 }

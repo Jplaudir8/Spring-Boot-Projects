@@ -5,15 +5,14 @@ import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-public class Pet {
+public class Pet implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Type(type = "string")
@@ -27,12 +26,11 @@ public class Pet {
     @Column(length = 600) // Setting max length up to 600 characters.
     private String notes;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(targetEntity = Customer.class)
     private Customer customer;
 
-    @OneToMany(mappedBy = "pet")
-    private List<Schedule> schedules;
+    /*@OneToMany(mappedBy = "pet")
+    private List<Schedule> schedules;*/
 
     /* Getters and setters to be added after finishing with definition of entity */
 }
