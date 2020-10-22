@@ -48,8 +48,6 @@ Once you have completed the above installation, you should also be able to run t
 
 A window should open showing you the test executions. All 9 tests should fail and if you click on them they will show `java.lang.UnsupportedOperationeException` as the cause.
 
-As you complete the objectives of this project, you will be able to verify progress by re-running these tests.
-
 ### Tested Conditions
 Tests will pass under the following conditions:
 
