@@ -2,11 +2,9 @@ package com.udacity.jdnd.course3.critter.domain;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.hibernate.annotations.Nationalized;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,11 +17,9 @@ public class Employee {
     private String name;
 
     @ElementCollection
-    @Type(type = "string")
     private Set<EmployeeSkill> skills;
 
     @ElementCollection
-    @Type(type = "string")
     private Set<DayOfWeek> daysAvailable;
 
     public Long getId() {

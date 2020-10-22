@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.domain;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +17,6 @@ public class Schedule {
     private LocalDate date;
 
     @ElementCollection
-    @Type(type = "string")
     private Set<EmployeeSkill> activities;
 
     /*@ManyToMany
