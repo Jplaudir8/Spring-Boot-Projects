@@ -18,7 +18,6 @@ public class Schedule {
 
     @ElementCollection
     private Set<EmployeeSkill> activities;
-
     /*@ManyToMany
     @JoinTable(
             name = "schedule_pet",
@@ -35,12 +34,10 @@ public class Schedule {
     )
     private List<Employee> employees;*/
 
-    @ManyToMany(targetEntity = Employee.class)
-    //@JoinColumn(name = "employee_id")
+    @ManyToMany(targetEntity = Employee.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees;
 
-    @ManyToMany(targetEntity = Pet.class)
-    //@JoinColumn(name = "pet_id")
+    @ManyToMany(targetEntity = Pet.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public Long getId() {

@@ -17,7 +17,7 @@ public class Customer {
     @Column(length = 10) // For US phone number length of 10 characters.
     private String phoneNumber;
 
-    @OneToMany(targetEntity = Pet.class)
+    @OneToMany(mappedBy = "customer", targetEntity = Pet.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public Long getId() {

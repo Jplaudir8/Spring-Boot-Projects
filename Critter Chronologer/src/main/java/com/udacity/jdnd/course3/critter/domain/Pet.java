@@ -23,7 +23,7 @@ public class Pet implements Serializable {
     @Column(length = 600) // Setting max length up to 600 characters.
     private String notes;
 
-    @ManyToOne(targetEntity = Customer.class)
+    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
     private Customer customer;
 
     public Long getId() {
