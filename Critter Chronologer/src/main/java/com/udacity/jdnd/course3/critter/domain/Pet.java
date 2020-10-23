@@ -20,8 +20,9 @@ public class Pet implements Serializable {
 
     LocalDate birthDate;
 
+    @Nationalized // they could mention foreign words.
     @Column(length = 600) // Setting max length up to 600 characters.
-    private String notes;
+    private String note;
 
     @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
     private Customer customer;
@@ -58,12 +59,12 @@ public class Pet implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Customer getCustomer() {
