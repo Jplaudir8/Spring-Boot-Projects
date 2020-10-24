@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
@@ -21,4 +23,11 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+
+
 }

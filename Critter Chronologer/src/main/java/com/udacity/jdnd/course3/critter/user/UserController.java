@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Users.
@@ -32,32 +34,8 @@ public class UserController {
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-
-        Customer customer = new Customer();
-        customer.setName(customerDTO.getName());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setNote(customerDTO.getNote());
-
-        // If our interface has the option to send Pet IDs that have already
-        // been registered in our platform then we would have to associate
-        // those pet ids to the new customer.
-
-        // Option A
-        /*if ( !customerDTO.getPetIds().isEmpty() ) {
-            List<Long> petIds = customerDTO.getPetIds();
-            List<Pet> pets = petService.getAllPetsByIds(petIds);
-            customer.setPets(pets);
-        }*/
-
-        // Option B
-        List<Long> petIds = customerDTO.getPetIds();
-        if(petIds != null) {
-            List<Pet> pets = petService.getAllPetsByIds(petIds);
-            customer.setPets(pets);
-        }
-
         // Saving customer data and returning it
-        Customer createdCustomer = customerService.save(customer);
+        Customer createdCustomer = customerService.save(convertCustomerDTOToCustomer(customerDTO));
 
         // Setting the id to customer DTO so that it is also presented to the front end side.
         customerDTO.setId(createdCustomer.getId());
@@ -67,7 +45,15 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+
+        List<Customer> customers = customerService.getAllCustomers();
+
+        //List<CustomerDTO> customerDTOList = customers.stream().map((Customer customer) -> new CustomerDTO(customer.getId(), customer.getName(),
+        //        customer.getPhoneNumber(), customer.getNote(), getCustomerPetIds(customer))).collect(Collectors.toList());
+
+
+
+        return null;
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -93,6 +79,50 @@ public class UserController {
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
         throw new UnsupportedOperationException();
+    }
+
+    private List<Long> getCustomerPetIds(Customer customer) {
+        List<Long> petIds = new ArrayList<>();
+
+        if (!customer.getPets().isEmpty()) {
+            for (Pet pet : customer.getPets()) {
+                petIds.add(pet.getId());
+            }
+            return petIds;
+        }
+        return null;
+    }
+
+    public CustomerDTO convertCustomerToCustomerDTO(Customer customer){
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(customer.getId());
+        customerDTO.setName(customer.getName());
+        customerDTO.setPhoneNumber(customer.getPhoneNumber());
+        customerDTO.setNote(customer.getNote());
+
+        List<Long> petIds = new ArrayList<>();
+
+        if (!customer.getPets().isEmpty()) {
+            petIds = customer.getPets().stream().map(Pet::getId).collect(Collectors.toList());
+        }
+
+        customerDTO.setPetIds(petIds);
+
+        return customerDTO;
+    }
+
+    public Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO){
+        Customer customer = new Customer();
+        customer.setName(customerDTO.getName());
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setNote(customerDTO.getNote());
+
+        if (!customerDTO.getPetIds().isEmpty()) {
+            List<Long> petIds = customerDTO.getPetIds();
+            List<Pet> pets = petService.getAllPetsByIds(petIds);
+            customer.setPets(pets);
+        }
+        return customer;
     }
 
 }

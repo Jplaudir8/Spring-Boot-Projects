@@ -1,5 +1,7 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.domain.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,17 @@ public class CustomerDTO {
     private String name;
     private String phoneNumber;
     private String note;
-    private List<Long> petIds;
+    private List<Long> petIds = new ArrayList<>();
+
+    public CustomerDTO() {}
+
+    public CustomerDTO(long id, String name, String phoneNumber, String note, List<Long> petIds) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.note = note;
+        this.petIds = petIds;
+    }
 
     public long getId() {
         return id;
