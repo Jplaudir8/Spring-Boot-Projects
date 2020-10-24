@@ -39,21 +39,14 @@ public class UserController {
 
         // Setting the id to customer DTO so that it is also presented to the front end side.
         customerDTO.setId(createdCustomer.getId());
-
         return customerDTO;
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-
         List<Customer> customers = customerService.getAllCustomers();
-
-        //List<CustomerDTO> customerDTOList = customers.stream().map((Customer customer) -> new CustomerDTO(customer.getId(), customer.getName(),
-        //        customer.getPhoneNumber(), customer.getNote(), getCustomerPetIds(customer))).collect(Collectors.toList());
-
-
-
-        return null;
+        List<CustomerDTO> customerDTOList = customers.stream().map(this::convertCustomerToCustomerDTO).collect(Collectors.toList());
+        return customerDTOList;
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -93,7 +86,12 @@ public class UserController {
         return null;
     }
 
-    public CustomerDTO convertCustomerToCustomerDTO(Customer customer){
+    /**
+     * Helper Method
+     * @param customer  customer object to be converted
+     * @return DTO form of Customer
+     */
+    private CustomerDTO convertCustomerToCustomerDTO(Customer customer){
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(customer.getId());
         customerDTO.setName(customer.getName());
@@ -105,13 +103,16 @@ public class UserController {
         if (!customer.getPets().isEmpty()) {
             petIds = customer.getPets().stream().map(Pet::getId).collect(Collectors.toList());
         }
-
         customerDTO.setPetIds(petIds);
-
         return customerDTO;
     }
 
-    public Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO){
+    /**
+     * Helper Metho
+     * @param customerDTO   customerDTO object to be converted
+     * @return  entity form of Customer
+     */
+    private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO){
         Customer customer = new Customer();
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());

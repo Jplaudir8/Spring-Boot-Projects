@@ -16,16 +16,6 @@ public class CustomerDTO {
     private String note;
     private List<Long> petIds = new ArrayList<>();
 
-    public CustomerDTO() {}
-
-    public CustomerDTO(long id, String name, String phoneNumber, String note, List<Long> petIds) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.note = note;
-        this.petIds = petIds;
-    }
-
     public long getId() {
         return id;
     }
