@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,6 +28,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public Customer getCustomerById(Long customerId) {
+
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if(customer.isPresent()) {
+            return customer.get();
+        } else {
+            return null;
+        }
     }
 
 

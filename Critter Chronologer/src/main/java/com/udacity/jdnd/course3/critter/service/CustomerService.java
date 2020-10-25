@@ -8,5 +8,5 @@ public interface CustomerService {
 
     Customer save(Customer customer);
     List<Customer> getAllCustomers();
-
+    Customer getCustomerById(Long customerId);
 }

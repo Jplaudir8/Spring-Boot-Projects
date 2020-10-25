@@ -43,15 +43,18 @@ public class UserController {
     }
 
     @GetMapping("/customer")
-    public List<CustomerDTO> getAllCustomers(){
+    public List<CustomerDTO> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         List<CustomerDTO> customerDTOList = customers.stream().map(this::convertCustomerToCustomerDTO).collect(Collectors.toList());
         return customerDTOList;
     }
 
     @GetMapping("/customer/pet/{petId}")
-    public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+    public CustomerDTO getOwnerByPet(@PathVariable long petId) {
+        Pet pet = petService.getPetById(petId);
+        Customer customer = pet.getCustomer();
+        CustomerDTO customerDTO = convertCustomerToCustomerDTO(customer);
+        return customerDTO;
     }
 
     @PostMapping("/employee")

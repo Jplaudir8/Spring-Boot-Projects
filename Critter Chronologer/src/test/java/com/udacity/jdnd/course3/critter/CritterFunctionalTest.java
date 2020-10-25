@@ -250,7 +250,7 @@ public class CritterFunctionalTest {
     private static CustomerDTO createCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName("TestEmployee");
-        customerDTO.setPhoneNumber("123-456-789");
+        customerDTO.setPhoneNumber("1234567890");
         return customerDTO;
     }
 
