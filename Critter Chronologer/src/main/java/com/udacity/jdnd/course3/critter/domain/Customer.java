@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.domain;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Customer {
     // It's a good practice to mark the @ManytoOne side as the owning side following the JPA specification, considering that the owning side of the relation tracked by Hibernate is the side of the relation that owns the foreign key in the database.
     // So we set the mappedBy option in Entity Customer since this option marks the Customer class as the inverse side and the Pet class as the owning side.
     @OneToMany(mappedBy = "customer", targetEntity = Pet.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Pet> pets;
+    private List<Pet> pets= new ArrayList<>();
 
     public Long getId() {
         return id;

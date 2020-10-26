@@ -37,8 +37,8 @@ public class PetController {
         Pet pet = convertPetDTOToPet(petDTO);
         Pet petSaved = petService.savePet(pet);
 
-        Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
-        if(customer != null) {
+        if(petDTO.getOwnerId() != 0) {
+            Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
             customer.getPets().add(petSaved);
             customerService.save(customer);
         } else {
@@ -51,7 +51,9 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        Pet pet = petService.getPetById(petId);
+        PetDTO petDTO = convertPetToPetDTO(pet);
+        return petDTO;
     }
 
     @GetMapping
@@ -77,10 +79,10 @@ public class PetController {
         pet.setName(petDTO.getName());
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setNote(petDTO.getNotes());
-
-        Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
-        pet.setCustomer(customer);
-
+        if(petDTO.getOwnerId()!=0) {
+            Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
+            pet.setCustomer(customer);
+        }
         return pet;
     }
 
@@ -89,7 +91,9 @@ public class PetController {
         petDTO.setId(pet.getId());
         petDTO.setType(pet.getType());
         petDTO.setName(pet.getName());
-        petDTO.setOwnerId(pet.getCustomer().getId());
+        if(pet.getCustomer()!=null) {
+            petDTO.setOwnerId(pet.getCustomer().getId());
+        }
         petDTO.setBirthDate(pet.getBirthDate());
         petDTO.setNotes(pet.getNote());
         return petDTO;

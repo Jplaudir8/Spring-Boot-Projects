@@ -32,7 +32,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerById(Long customerId) {
-
         Optional<Customer> customer = customerRepository.findById(customerId);
 
         if(customer.isPresent()) {

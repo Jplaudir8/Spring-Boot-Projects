@@ -5,7 +5,6 @@ import com.udacity.jdnd.course3.critter.domain.Customer;
 import java.util.List;
 
 public interface CustomerService {
-
     Customer save(Customer customer);
     List<Customer> getAllCustomers();
     Customer getCustomerById(Long customerId);

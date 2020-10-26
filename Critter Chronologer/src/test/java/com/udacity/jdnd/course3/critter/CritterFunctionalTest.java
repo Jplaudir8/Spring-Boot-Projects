@@ -47,6 +47,7 @@ public class CritterFunctionalTest {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
         CustomerDTO retrievedCustomer = userController.getAllCustomers().get(0);
+
         Assertions.assertEquals(newCustomer.getName(), customerDTO.getName());
         Assertions.assertEquals(newCustomer.getId(), retrievedCustomer.getId());
         Assertions.assertTrue(retrievedCustomer.getId() > 0);
@@ -57,6 +58,7 @@ public class CritterFunctionalTest {
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO newEmployee = userController.saveEmployee(employeeDTO);
         EmployeeDTO retrievedEmployee = userController.getEmployee(newEmployee.getId());
+
         Assertions.assertEquals(employeeDTO.getSkills(), newEmployee.getSkills());
         Assertions.assertEquals(newEmployee.getId(), retrievedEmployee.getId());
         Assertions.assertTrue(retrievedEmployee.getId() > 0);
@@ -74,7 +76,7 @@ public class CritterFunctionalTest {
         //make sure pet contains customer id
         PetDTO retrievedPet = petController.getPet(newPet.getId());
         Assertions.assertEquals(retrievedPet.getId(), newPet.getId());
-        Assertions.assertEquals(retrievedPet.getOwnerId(), newCustomer.getId());
+        Assertions.assertEquals(retrievedPet.getOwnerId(), newCustomer.getId()); // This checks that the owner id of the added pet = the added customer.
 
         //make sure you can retrieve pets by owner
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
@@ -118,7 +120,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(owner.getId(), newCustomer.getId());
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
     }
-
+    ///////////////////////////////
     @Test
     public void testChangeEmployeeAvailability() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
