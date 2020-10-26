@@ -71,7 +71,6 @@ public class UserController {
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-
         Employee retrievedEmployee = employeeService.getEmployeeById(employeeId);
         EmployeeDTO employeeDTO = convertEmployeeToEmployeeDTO(retrievedEmployee);
         return employeeDTO;
@@ -79,7 +78,9 @@ public class UserController {
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        employee.setDaysAvailable(daysAvailable);
+        employeeService.save(employee);
     }
 
     @GetMapping("/employee/availability")
@@ -87,21 +88,10 @@ public class UserController {
         throw new UnsupportedOperationException();
     }
 
-    private List<Long> getCustomerPetIds(Customer customer) {
-        List<Long> petIds = new ArrayList<>();
-
-        if (!customer.getPets().isEmpty()) {
-            for (Pet pet : customer.getPets()) {
-                petIds.add(pet.getId());
-            }
-            return petIds;
-        }
-        return null;
-    }
 
     /**
      * Helper Method
-     * @param customer  customer object to be converted
+     * @param customer  customer object to be converted into DTO
      * @return DTO form of Customer
      */
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer){
@@ -122,7 +112,7 @@ public class UserController {
 
     /**
      * Helper Method
-     * @param customerDTO   customerDTO object to be converted
+     * @param customerDTO   customerDTO object to be converted into entity
      * @return  entity form of Customer
      */
     private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO){
@@ -139,18 +129,34 @@ public class UserController {
         return customer;
     }
 
+    /**
+     * Helper Method
+     * @param employeeDTO   employeeDTO object to be converted into entity
+     * @return entity form of Employee
+     */
     private Employee convertEmployeeDTOToEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
         employee.setSkills(employeeDTO.getSkills());
+        if(!employeeDTO.getDaysAvailable().isEmpty()){
+            employee.setDaysAvailable(employeeDTO.getDaysAvailable());
+        }
         return employee;
     }
 
+    /**
+     * Helper Method
+     * @param employee  employee object to be converted into DTO
+     * @return DTO form of employee
+     */
     private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setSkills(employee.getSkills());
+        if(!employee.getDaysAvailable().isEmpty()){
+            employeeDTO.setDaysAvailable(employee.getDaysAvailable());
+        }
         return employeeDTO;
     }
 

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Employee {
     private Set<EmployeeSkill> skills;
 
     @ElementCollection
-    private Set<DayOfWeek> daysAvailable;
+    private Set<DayOfWeek> daysAvailable = new HashSet<>();
 
     public Long getId() {
         return id;

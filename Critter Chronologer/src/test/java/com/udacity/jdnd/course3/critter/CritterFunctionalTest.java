@@ -42,7 +42,7 @@ public class CritterFunctionalTest {
     @Autowired
     private ScheduleController scheduleController;
 
-    @Test
+    @Test // OK
     public void testCreateCustomer(){
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -53,7 +53,7 @@ public class CritterFunctionalTest {
         Assertions.assertTrue(retrievedCustomer.getId() > 0);
     }
 
-    @Test
+    @Test // OK
     public void testCreateEmployee(){
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO newEmployee = userController.saveEmployee(employeeDTO);
@@ -64,7 +64,7 @@ public class CritterFunctionalTest {
         Assertions.assertTrue(retrievedEmployee.getId() > 0);
     }
 
-    @Test
+    @Test // OK
     public void testAddPetsToCustomer() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -89,7 +89,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
     }
 
-    @Test
+    @Test // Not Passing yet
     public void testFindPetsByOwner() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -107,7 +107,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(pets.get(0).getId(), newPet.getId());
     }
 
-    @Test
+    @Test // OK
     public void testFindOwnerByPet() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -120,7 +120,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(owner.getId(), newCustomer.getId());
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
     }
-    ///////////////////////////////
+
     @Test
     public void testChangeEmployeeAvailability() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
@@ -129,7 +129,6 @@ public class CritterFunctionalTest {
 
         Set<DayOfWeek> availability = Sets.newHashSet(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY);
         userController.setAvailability(availability, emp1.getId());
-
         EmployeeDTO emp2 = userController.getEmployee(emp1.getId());
         Assertions.assertEquals(availability, emp2.getDaysAvailable());
     }
