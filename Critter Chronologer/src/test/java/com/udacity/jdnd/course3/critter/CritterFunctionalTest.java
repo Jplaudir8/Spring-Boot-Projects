@@ -122,7 +122,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
     }
 
-    @Test
+    @Test // OK
     public void testChangeEmployeeAvailability() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO emp1 = userController.saveEmployee(employeeDTO);

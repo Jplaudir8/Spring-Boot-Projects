@@ -2,11 +2,16 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.domain.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -32,6 +37,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Employee> getEmployeesByAvailability(Set<EmployeeSkill> skills, DayOfWeek day) {
+
+        List<Employee> availableEmployeesOnDay = employeeRepository.findAllByDaysAvailableContaining(day);
+        List<Employee> availableEmployeesOnDayWSkills = new ArrayList<>();
+        for (Employee employee : availableEmployeesOnDay) {
+            if (employee.getSkills().containsAll(skills)) {
+                availableEmployeesOnDayWSkills.add(employee);
+            }
+        }
+        return availableEmployeesOnDayWSkills;
     }
 
 
