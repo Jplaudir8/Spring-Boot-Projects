@@ -21,7 +21,7 @@ public class Employee {
     private Set<EmployeeSkill> skills;
 
     @ElementCollection
-    private Set<DayOfWeek> daysAvailable = new HashSet<>();
+    private Set<DayOfWeek> daysAvailable = null;
 
     public Long getId() {
         return id;
