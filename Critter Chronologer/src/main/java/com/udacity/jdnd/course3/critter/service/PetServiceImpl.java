@@ -1,6 +1,8 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.domain.Customer;
 import com.udacity.jdnd.course3.critter.domain.Pet;
+import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,12 @@ public class PetServiceImpl implements PetService {
     @Autowired
     PetRepository petRepository;
 
-    public PetServiceImpl(PetRepository petRepository) {
+    @Autowired
+    CustomerRepository customerRepository;
+
+    public PetServiceImpl(PetRepository petRepository, CustomerRepository customerRepository) {
         this.petRepository = petRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -46,6 +52,17 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<Pet> getAllPets() {
         return petRepository.findAll();
+    }
+
+    @Override
+    public List<Pet> getAllPetsByOwnerId(long ownerId) {
+        Optional<Customer> customer = customerRepository.findById(ownerId);
+        if(customer.isPresent()) {
+            List<Pet> pets = customer.get().getPets();
+            return pets;
+        } else {
+            return null;
+        }
     }
 
 

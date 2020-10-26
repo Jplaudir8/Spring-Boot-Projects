@@ -10,4 +10,5 @@ public interface PetService {
     Pet getPetById(Long petId);
     Pet savePet(Pet pet);
     List<Pet> getAllPets();
+    List<Pet> getAllPetsByOwnerId(long ownerId);
 }

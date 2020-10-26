@@ -4,14 +4,9 @@ import com.udacity.jdnd.course3.critter.domain.Customer;
 import com.udacity.jdnd.course3.critter.domain.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerServiceImpl;
 import com.udacity.jdnd.course3.critter.service.PetServiceImpl;
-import org.hibernate.annotations.Nationalized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,8 +36,6 @@ public class PetController {
             Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
             customer.getPets().add(petSaved);
             customerService.save(customer);
-        } else {
-            System.out.print("There is no customer associated to this pet");
         }
 
         petDTO.setId(petSaved.getId());
@@ -65,7 +58,9 @@ public class PetController {
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+        List<Pet> pets = petService.getAllPetsByOwnerId(ownerId);
+        List<PetDTO> petDTOS = pets.stream().map(this::convertPetToPetDTO).collect(Collectors.toList());
+        return petDTOS;
     }
 
     /**
