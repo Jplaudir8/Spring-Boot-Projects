@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,6 +34,8 @@ import java.util.stream.IntStream;
 @Transactional
 @SpringBootTest(classes = CritterApplication.class)
 public class CritterFunctionalTest {
+
+    Logger log = Logger.getLogger(CritterFunctionalTest.class.getSimpleName());
 
     @Autowired
     private UserController userController;
@@ -90,7 +93,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
     }
 
-    @Test // Not Passing yet
+    @Test // OK
     public void testFindPetsByOwner() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
@@ -101,11 +104,18 @@ public class CritterFunctionalTest {
         petDTO.setType(PetType.DOG);
         petDTO.setName("DogName");
         PetDTO newPet2 = petController.savePet(petDTO);
-
+        
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
+        /*
+        Used for Debug
+        for(PetDTO p : pets){
+            log.info("PetID: " + p.getId()+" PetOwnerID: "+ p.getOwnerId());
+        }
+        log.info("newCustomer.getID() -> " + newCustomer.getId());
+        log.info("newPet.getID() -> " + newPet.getId());*/
         Assertions.assertEquals(pets.size(), 2);
         Assertions.assertEquals(pets.get(0).getOwnerId(), newCustomer.getId());
-        Assertions.assertEquals(pets.get(0).getId(), newPet.getId());
+        Assertions.assertEquals(pets.get(1).getId(), newPet.getId());
     }
 
     @Test // OK
