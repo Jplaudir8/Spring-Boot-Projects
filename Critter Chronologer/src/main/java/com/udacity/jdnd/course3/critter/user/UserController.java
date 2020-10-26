@@ -138,7 +138,7 @@ public class UserController {
         Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
         employee.setSkills(employeeDTO.getSkills());
-        if(!employeeDTO.getDaysAvailable().isEmpty()){
+        if(employeeDTO.getDaysAvailable()!=null){
             employee.setDaysAvailable(employeeDTO.getDaysAvailable());
         }
         return employee;
@@ -154,7 +154,7 @@ public class UserController {
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setSkills(employee.getSkills());
-        if(!employee.getDaysAvailable().isEmpty()){
+        if(employee.getDaysAvailable()!=null){
             employeeDTO.setDaysAvailable(employee.getDaysAvailable());
         }
         return employeeDTO;

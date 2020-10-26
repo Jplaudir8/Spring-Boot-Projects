@@ -12,7 +12,7 @@ public class EmployeeDTO {
     private long id;
     private String name;
     private Set<EmployeeSkill> skills;
-    private Set<DayOfWeek> daysAvailable = new HashSet<>();
+    private Set<DayOfWeek> daysAvailable = null;
 
     public long getId() {
         return id;
