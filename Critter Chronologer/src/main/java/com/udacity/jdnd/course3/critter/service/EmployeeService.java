@@ -11,4 +11,5 @@ public interface EmployeeService {
     Employee save(Employee employee);
     Employee getEmployeeById(Long employeeId);
     List<Employee> getEmployeesByAvailability(Set<EmployeeSkill> skills, DayOfWeek day);
+    List<Employee> getAllEmployeesByIds(List<Long> employeeIds);
 }

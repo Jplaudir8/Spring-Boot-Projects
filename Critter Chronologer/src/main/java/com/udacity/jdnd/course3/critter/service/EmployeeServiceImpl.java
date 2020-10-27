@@ -52,5 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return availableEmployeesOnDayWSkills;
     }
 
+    @Override
+    public List<Employee> getAllEmployeesByIds(List<Long> employeeIds) {
+        return employeeRepository.findAllById(employeeIds);
+    }
+
 
 }

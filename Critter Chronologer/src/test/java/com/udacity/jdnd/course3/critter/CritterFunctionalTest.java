@@ -104,7 +104,7 @@ public class CritterFunctionalTest {
         petDTO.setType(PetType.DOG);
         petDTO.setName("DogName");
         PetDTO newPet2 = petController.savePet(petDTO);
-        
+
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
         /*
         Used for Debug
@@ -190,23 +190,26 @@ public class CritterFunctionalTest {
         EmployeeDTO employeeTemp = createEmployeeDTO();
         employeeTemp.setDaysAvailable(Sets.newHashSet(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY));
         EmployeeDTO employeeDTO = userController.saveEmployee(employeeTemp);
+
         CustomerDTO customerDTO = userController.saveCustomer(createCustomerDTO());
+
         PetDTO petTemp = createPetDTO();
         petTemp.setOwnerId(customerDTO.getId());
         PetDTO petDTO = petController.savePet(petTemp);
 
-        LocalDate date = LocalDate.of(2019, 12, 25);
         List<Long> petList = Lists.newArrayList(petDTO.getId());
         List<Long> employeeList = Lists.newArrayList(employeeDTO.getId());
-        Set<EmployeeSkill> skillSet =  Sets.newHashSet(EmployeeSkill.PETTING);
+        LocalDate date = LocalDate.of(2019, 12, 25);
+        Set<EmployeeSkill> skillSet =  Sets.newHashSet(EmployeeSkill.PETTING); // employeeDTO has PETTING Skill
 
         scheduleController.createSchedule(createScheduleDTO(petList, employeeList, date, skillSet));
         ScheduleDTO scheduleDTO = scheduleController.getAllSchedules().get(0);
 
-        Assertions.assertEquals(scheduleDTO.getActivities(), skillSet);
-        Assertions.assertEquals(scheduleDTO.getDate(), date);
-        Assertions.assertEquals(scheduleDTO.getEmployeeIds(), employeeList);
         Assertions.assertEquals(scheduleDTO.getPetIds(), petList);
+        Assertions.assertEquals(scheduleDTO.getEmployeeIds(), employeeList);
+        Assertions.assertEquals(scheduleDTO.getDate(), date);
+        Assertions.assertEquals(scheduleDTO.getActivities(), skillSet);
+
     }
 
     @Test
