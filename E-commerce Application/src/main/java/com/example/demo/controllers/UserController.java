@@ -1,10 +1,9 @@
 package com.example.demo.controllers;
 
-import java.util.Optional;
 
-import org.slf4j.Logger;
+import com.example.demo.security.UserDetailsServiceImpl;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,7 @@ import com.example.demo.model.requests.CreateUserRequest;
 @RequestMapping("/api/user")
 public class UserController {
 
-	private static Logger log;
+	private static Logger log = Logger.getLogger(UserDetailsServiceImpl.class.getName());
 
 	@Autowired
 	private UserRepository userRepository;
