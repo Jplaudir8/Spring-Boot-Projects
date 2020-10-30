@@ -2,7 +2,6 @@ package com.udacity.examples.Testing;
 
 import org.junit.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import java.util.List;
@@ -23,19 +22,17 @@ public class HelperTest {
     }
 
     /**
-     * this should be public static
+     * these should be public static
      */
 
     @BeforeClass
     public static void initClass() {
-        System.out.println("init Class executed");
-
+        System.out.println("** init Class executed **");
     }
-
 
     @AfterClass
     public static void teardownclass() {
-        System.out.println("teardown Class executed");
+        System.out.println("** teardown Class executed **");
     }
 
     // Note: Calling the method test_something may be redundant since we already have a @Test annotation that tells we are referring to a test method
@@ -87,7 +84,8 @@ public class HelperTest {
         assertEquals(7, Helper.getStats(empLevel).getMax());
     }
 
-    //Test: getMergedList()
+    // Example using @Ignore. This is simply used to skip a test.
+    @Ignore
     @Test
     public void verify_mergeList() {
         List<String> names = Arrays.asList("Joan", "Harpreet", "", "Emilio");
