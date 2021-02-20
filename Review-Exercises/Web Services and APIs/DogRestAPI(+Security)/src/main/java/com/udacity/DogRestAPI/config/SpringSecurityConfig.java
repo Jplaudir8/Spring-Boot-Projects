@@ -14,6 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /** .csrf().disable()        disables cross site request forgery.
+     *  .authorizeRequests().anyRequest().authenticated() These tree mean all requests to this API requires authentication.
+     *  .and().httpBasic(); Here we are allowing users to use HTTP basic authentication (or basic auth).
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -25,6 +29,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
+    /** In this method we are creating an in-memory user, where we assigning the username of admin,
+     *  a password and the role of "USER"
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -33,6 +40,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("USER");
     }
 
+    /** Remember that when we use basic auth, the password will be base64 encoded. This method is
+     *  the one that encodes this password.
+     */
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();

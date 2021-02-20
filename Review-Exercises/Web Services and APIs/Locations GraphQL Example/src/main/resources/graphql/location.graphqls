@@ -1,11 +1,12 @@
+# This location type is represented by a java class (java/com.udacity.graphql.entity.Location)
 type Location {
- id: ID!
+ id: ID! # ! means the field is required
  name: String!
  address: String!
 }
 
 type Query {
- findAllLocations: [Location]!
+ findAllLocations: [Location]! # using [] means we are using an array.
 }
 
 type Mutation {
