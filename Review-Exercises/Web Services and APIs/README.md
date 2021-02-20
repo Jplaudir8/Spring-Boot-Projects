@@ -1,4 +1,4 @@
-## DogGraphQL
+## DogGraphQL Folder
 
 Tried GraphQL queries such as:
         
@@ -17,7 +17,7 @@ Tried GraphQL queries such as:
 }
 ```
 (GraphiQL Syntax)
-```GraphQL
+```graphql
 query {
    findAllDogs {
      id
@@ -37,7 +37,7 @@ query {
 }
 ```
 
-## Microservices
+## Microservices Folder
 For this exercise I have created a Eureka Server (Our Service Registry) and one microservice, Dog Microservice, which retrieves information about dogs. These microservices will use the Eureka client to register themselves to the Eureka Server.
 
 Architecture for this exercise:
@@ -50,3 +50,35 @@ This dog microservice uses Spring data to implement a JPA Dog repository and Spr
 - Do not forget that if a microservice is not registered as an Eureka client, then:
   1. The microservice cannot be discovered.
   2. Clients of the microservice must use the host name and port to access the service.
+
+
+## Locations GraphQL Example Folder
+Sample Queries and Mutations:
+
+```graphql
+{
+  findAllApplications {
+    id
+    owner
+    address
+  }
+}
+```
+
+```graphql
+mutation {
+  newLocation(
+    name: "MBJ Airport",
+    address: "Montego Bay, Jamaica airport location") {
+      id 
+      name
+      address
+    }
+}
+```
+
+```graphql
+mutation {
+  deleteLocation(id:1)
+}
+```
