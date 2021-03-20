@@ -19,7 +19,7 @@ public class Plant {
     @Column(precision = 12, scale = 4)
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // do not retrieve delivery if we dont need it
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 

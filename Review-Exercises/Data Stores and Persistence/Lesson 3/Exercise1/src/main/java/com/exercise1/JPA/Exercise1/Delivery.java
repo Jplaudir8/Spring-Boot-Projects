@@ -23,7 +23,8 @@ public class Delivery {
     private Boolean isCompleted;
 
     // Lazy fetch optional, but often a good idea for collection attributes
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
+    // added CascateType.REMOVE to automatically clear any associated plants when removed
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Plant> plants;
 
     public Long getId() {
