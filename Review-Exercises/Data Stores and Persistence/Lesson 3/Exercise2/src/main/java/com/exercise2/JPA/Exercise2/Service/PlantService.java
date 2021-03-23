@@ -1,4 +1,4 @@
-package com.exercise2.JPA.Exercise2;
+package com.exercise2.JPA.Exercise2.Service;
 
 import com.exercise2.JPA.Exercise2.Inventory.Plant;
 import org.springframework.stereotype.Service;

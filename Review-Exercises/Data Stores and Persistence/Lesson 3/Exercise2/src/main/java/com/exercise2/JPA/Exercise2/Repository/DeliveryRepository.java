@@ -1,5 +1,6 @@
-package com.exercise2.JPA.Exercise2;
+package com.exercise2.JPA.Exercise2.Repository;
 
+import com.exercise2.JPA.Exercise2.Delivery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

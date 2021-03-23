@@ -1,6 +1,8 @@
-package com.exercise2.JPA.Exercise2;
+package com.exercise2.JPA.Exercise2.Controller;
 
 import com.exercise2.JPA.Exercise2.Inventory.Plant;
+import com.exercise2.JPA.Exercise2.PlantDTO;
+import com.exercise2.JPA.Exercise2.Service.PlantService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
