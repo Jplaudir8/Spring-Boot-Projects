@@ -1,6 +1,7 @@
 package com.exercise2.JPA.Exercise2.Service;
 
 import com.exercise2.JPA.Exercise2.Delivery;
+import com.exercise2.JPA.Exercise2.RecipientAndPrice;
 import com.exercise2.JPA.Exercise2.Repository.DeliveryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,7 @@ public class DeliveryService {
         return deliveryRepository.getDeliveriesByName(name);
     }
 
+    public RecipientAndPrice getBill(Long deliveryId) {
+        return deliveryRepository.getBill(deliveryId);
+    }
 }

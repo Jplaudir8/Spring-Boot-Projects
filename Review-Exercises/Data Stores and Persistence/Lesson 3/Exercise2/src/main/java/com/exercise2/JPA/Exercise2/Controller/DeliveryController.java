@@ -1,6 +1,7 @@
 package com.exercise2.JPA.Exercise2.Controller;
 
 import com.exercise2.JPA.Exercise2.Delivery;
+import com.exercise2.JPA.Exercise2.RecipientAndPrice;
 import com.exercise2.JPA.Exercise2.Service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,4 +25,8 @@ public class DeliveryController {
         return deliveryService.getDeliveriesByPerson(name);
     }
 
+    @GetMapping("/bill/{deliveryId}")
+    public RecipientAndPrice getBill(@PathVariable Long deliveryId) {
+        return deliveryService.getBill(deliveryId);
+    }
 }
