@@ -8,6 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@NamedQuery(
+        name = "Delivery.findByName",
+        query = "SELECT d FROM Delivery d WHERE d.recipientName = :name"
+)
+
 @Entity
 public class Delivery {
     @Id
@@ -15,6 +20,7 @@ public class Delivery {
     private Long id;
 
     @Nationalized
+    @Column(name = "recipient_Name")
     private String recipientName;
     @Column(length = 500, name = "address_full")
     private String address;

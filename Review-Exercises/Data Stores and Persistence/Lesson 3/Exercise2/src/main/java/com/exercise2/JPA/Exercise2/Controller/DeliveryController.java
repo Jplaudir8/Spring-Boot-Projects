@@ -5,6 +5,8 @@ import com.exercise2.JPA.Exercise2.Service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/delivery")
 public class DeliveryController {
@@ -15,6 +17,11 @@ public class DeliveryController {
     @PostMapping
     public Long setDelivery(@RequestBody Delivery delivery) {
         return deliveryService.save(delivery);
+    }
+
+    @GetMapping("/deliveriesByPerson/{name}")
+    public List<Delivery> getDeliveriesFromPerson(@PathVariable String name) {
+        return deliveryService.getDeliveriesByPerson(name);
     }
 
 }

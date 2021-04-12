@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -30,4 +32,11 @@ public class DeliveryRepository {
         Delivery delivery = entityManager.find(Delivery.class, id);
         entityManager.remove(delivery);
     }
+
+    public List<Delivery> getDeliveriesByName(String name) {
+        TypedQuery<Delivery> query = entityManager.createNamedQuery("Delivery.findByName", Delivery.class);
+        query.setParameter("name", name);
+        return query.getResultList();
+    }
+
 }
