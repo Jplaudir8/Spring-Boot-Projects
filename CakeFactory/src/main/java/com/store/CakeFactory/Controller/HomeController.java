@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String landingPage(Model model) {
+    public String landingPage() {
         return "index";
     }
 }
