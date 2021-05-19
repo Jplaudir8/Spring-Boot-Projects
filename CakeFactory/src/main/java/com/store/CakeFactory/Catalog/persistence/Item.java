@@ -1,10 +1,7 @@
 package com.store.CakeFactory.Catalog.persistence;
 
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,23 +11,26 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "catalog")
+
 public class Item {
 
     @Id
-    String sku;
+    public String sku;
 
     @NotBlank
-    String title;
+    public String title;
 
     @NotNull
-    BigDecimal price;
+    public BigDecimal price;
 
     public Item(@NotBlank String title, @NotNull BigDecimal price) {
         this.title = title;
         this.price = price;
+    }
+
+    public Item() {
     }
 
     @Override
@@ -45,5 +45,29 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.sku);
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
