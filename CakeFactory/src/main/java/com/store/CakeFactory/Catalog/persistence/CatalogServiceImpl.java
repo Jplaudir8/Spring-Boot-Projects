@@ -1,8 +1,5 @@
 package com.store.CakeFactory.Catalog.persistence;
 
-import com.store.CakeFactory.Catalog.persistence.CatalogService;
-import com.store.CakeFactory.Catalog.persistence.Item;
-import com.store.CakeFactory.Catalog.persistence.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

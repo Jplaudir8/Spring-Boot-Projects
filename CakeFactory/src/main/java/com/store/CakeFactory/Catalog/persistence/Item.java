@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "catalog")
-
+@Data
 public class Item {
 
     @Id
@@ -30,9 +30,6 @@ public class Item {
         this.price = price;
     }
 
-    public Item() {
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Item) {
@@ -45,29 +42,5 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.sku);
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

@@ -12,36 +12,34 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.math.BigDecimal;
 
 public class JpaCatalogServiceTest {
-    @Autowired
-    TestEntityManager testEntityManager;
-
-    @Autowired
-    ItemRepository itemRepository;
-
-    private CatalogServiceImpl jpaCatalogService;
-
-    @BeforeEach
-    void setup() {
-        this.jpaCatalogService = new CatalogServiceImpl(this.itemRepository);
-    }
-
-    @Test
-    @DisplayName("returns data from the database")
-    void returnsDataFromDatabase() {
-        String expectedTitle = "Victoria Sponge";
-        saveTestItem(expectedTitle, BigDecimal.valueOf(5.55));
-
-        Iterable<Item> items = jpaCatalogService.getItems();
-
-        org.assertj.core.api.Assertions.assertThat(items).anyMatch(item -> expectedTitle.equals(item.getTitle()));
-    }
-
-    private void saveTestItem(String title, BigDecimal price) {
-        Item itemEntity = new Item();
-        itemEntity.sku = "test-item-1";
-        itemEntity.title = title;
-        itemEntity.price = price;
-
-        testEntityManager.persistAndFlush(itemEntity);
-    }
+//    @Autowired
+//    TestEntityManager testEntityManager;
+//
+//    @Autowired
+//    ItemRepository itemRepository;
+//
+//    private CatalogServiceImpl jpaCatalogService;
+//
+//    @BeforeEach
+//    void setup() {
+//        this.jpaCatalogService = new CatalogServiceImpl(this.itemRepository);
+//    }
+//
+//    @Test
+//    @DisplayName("returns data from the database")
+//    void returnsDataFromDatabase() {
+//        String expectedTitle = "Victoria Sponge";
+//        saveTestItem(expectedTitle, BigDecimal.valueOf(5.55));
+//
+//        Iterable<Item> items = jpaCatalogService.getItems();
+//
+//        org.assertj.core.api.Assertions.assertThat(items).anyMatch(item -> expectedTitle.equals(item.getTitle()));
+//    }
+//
+//    private void saveTestItem(String title, BigDecimal price) {
+//        Item itemEntity = new Item(title, price);
+//        itemEntity.sku = "test-item-1";
+//
+//        testEntityManager.persistAndFlush(itemEntity);
+//    }
 }
