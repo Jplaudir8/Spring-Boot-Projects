@@ -2,6 +2,7 @@ package com.store.CakeFactory.Catalog.persistence;
 
 
 import lombok.*;
+import org.hibernate.validator.constraints.Normalized;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "catalog")
 @Data
+@NoArgsConstructor
 public class Item {
 
     @Id
