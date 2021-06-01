@@ -1,17 +1,17 @@
-package com.store.CakeFactory.persistence;
-
-import com.store.CakeFactory.Catalog.persistence.CatalogServiceImpl;
-import com.store.CakeFactory.Catalog.persistence.Item;
-import com.store.CakeFactory.Catalog.persistence.ItemRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-
-import java.math.BigDecimal;
-
-public class JpaCatalogServiceTest {
+//package com.store.CakeFactory.persistence;
+//
+//import com.store.CakeFactory.Catalog.persistence.CatalogServiceImpl;
+//import com.store.CakeFactory.Catalog.persistence.Item;
+//import com.store.CakeFactory.Catalog.persistence.ItemRepository;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+//
+//import java.math.BigDecimal;
+//
+//public class JpaCatalogServiceTest {
 //    @Autowired
 //    TestEntityManager testEntityManager;
 //
@@ -24,7 +24,7 @@ public class JpaCatalogServiceTest {
 //    void setup() {
 //        this.jpaCatalogService = new CatalogServiceImpl(this.itemRepository);
 //    }
-//
+
 //    @Test
 //    @DisplayName("returns data from the database")
 //    void returnsDataFromDatabase() {
@@ -35,11 +35,11 @@ public class JpaCatalogServiceTest {
 //
 //        org.assertj.core.api.Assertions.assertThat(items).anyMatch(item -> expectedTitle.equals(item.getTitle()));
 //    }
-//
+
 //    private void saveTestItem(String title, BigDecimal price) {
 //        Item itemEntity = new Item(title, price);
 //        itemEntity.sku = "test-item-1";
 //
 //        testEntityManager.persistAndFlush(itemEntity);
 //    }
-}
+// }
