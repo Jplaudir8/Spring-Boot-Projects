@@ -22,4 +22,18 @@ public class CatalogServiceImpl implements CatalogService {
                 .map(entity -> new Item(entity.title, entity.price))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Item getItemBySKU(String sku) {
+        Item entity = itemRepository.findBySKU(sku);
+        if (entity == null) {
+            return null;
+        }
+        return mapEntity(entity);
+    }
+
+    Item mapEntity(Item entity) {
+        return new Item(entity.sku, entity.title, entity.price);
+    }
+
 }

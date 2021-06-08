@@ -32,6 +32,12 @@ public class Item {
         this.price = price;
     }
 
+    public Item(String sku, String title, BigDecimal price) {
+        this.sku = sku;
+        this.title = title;
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Item) {
